@@ -1,0 +1,821 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>eudiplo documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#AUTH_VALIDATION_SCHEMA" title="src/auth/auth.module.ts" ><b>AUTH_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../auth.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CRYPTO_VALIDATION_SCHEMA" title="src/crypto/key/crypto/crypto.module.ts" ><b>CRYPTO_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../crypto.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DB_VALIDATION_SCHEMA" title="src/database/database.module.ts" ><b>DB_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../database.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ED25519" title="src/crypto/key/crypto/ed25519.ts" ><b>ED25519</b>&nbsp;&nbsp;&nbsp;(src/.../ed25519.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#IS_PUBLIC_KEY" title="src/auth/public.decorator.ts" ><b>IS_PUBLIC_KEY</b>&nbsp;&nbsp;&nbsp;(src/.../public.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ISSUER_VALIDATION_SCHEMA" title="src/issuer/issuer.module.ts" ><b>ISSUER_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../issuer.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#KEY_VALIDATION_SCHEMA" title="src/crypto/key/key.module.ts" ><b>KEY_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../key.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Public" title="src/auth/public.decorator.ts" ><b>Public</b>&nbsp;&nbsp;&nbsp;(src/.../public.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#REGISTRAR_VALIDATION_SCHEMA" title="src/registrar/registrar.module.ts" ><b>REGISTRAR_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../registrar.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SESSION_LOGGER_KEY" title="src/utils/logger/session-logger.decorator.ts" ><b>SESSION_LOGGER_KEY</b>&nbsp;&nbsp;&nbsp;(src/.../session-logger.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SESSION_VALIDATION_SCHEMA" title="src/session/session.module.ts" ><b>SESSION_VALIDATION_SCHEMA</b>&nbsp;&nbsp;&nbsp;(src/.../session.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SessionLogger" title="src/utils/logger/session-logger.decorator.ts" ><b>SessionLogger</b>&nbsp;&nbsp;&nbsp;(src/.../session-logger.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TENANT_EVENTS" title="src/auth/tenant-events.ts" ><b>TENANT_EVENTS</b>&nbsp;&nbsp;&nbsp;(src/.../tenant-events.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Token" title="src/auth/token.decorator.ts" ><b>Token</b>&nbsp;&nbsp;&nbsp;(src/.../token.decorator.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/auth/auth.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AUTH_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>AUTH_VALIDATION_SCHEMA</b></span>
+                        <a href="#AUTH_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    OIDC: Joi.string().optional(),
+    KEYCLOAK_INTERNAL_ISSUER_URL: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().required(),
+        otherwise: Joi.string().optional(),
+    }),
+    KEYCLOAK_CLIENT_ID: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().required(),
+        otherwise: Joi.string().optional(),
+    }),
+    JWT_SECRET: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().optional(),
+        otherwise: Joi.string().required(),
+    }),
+    JWT_ISSUER: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().optional(),
+        otherwise: Joi.string().optional().default(&#x27;eudiplo-service&#x27;),
+    }),
+    JWT_EXPIRES_IN: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().optional(),
+        otherwise: Joi.string().default(&#x27;24h&#x27;),
+    }),
+    AUTH_CLIENT_SECRET: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().optional(),
+        otherwise: Joi.string().required(),
+    }),
+    AUTH_CLIENT_ID: Joi.when(&#x27;OIDC&#x27;, {
+        then: Joi.string().optional(),
+        otherwise: Joi.string().required(),
+    }),
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/crypto/key/crypto/crypto.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CRYPTO_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>CRYPTO_VALIDATION_SCHEMA</b></span>
+                        <a href="#CRYPTO_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    CRYPTO_ALG: Joi.string().valid(&#x27;ES256&#x27;, &#x27;Ed25519&#x27;).default(&#x27;ES256&#x27;),
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/database/database.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DB_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>DB_VALIDATION_SCHEMA</b></span>
+                        <a href="#DB_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    DB_TYPE: Joi.string().valid(&#x27;sqlite&#x27;, &#x27;postgres&#x27;).default(&#x27;sqlite&#x27;),
+    DB_HOST: Joi.string().when(&#x27;DB_TYPE&#x27;, {
+        is: &#x27;sqlite&#x27;,
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+    DB_PORT: Joi.number().when(&#x27;DB_TYPE&#x27;, {
+        is: &#x27;sqlite&#x27;,
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+    DB_USERNAME: Joi.string().when(&#x27;DB_TYPE&#x27;, {
+        is: &#x27;sqlite&#x27;,
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+    DB_PASSWORD: Joi.string().when(&#x27;DB_TYPE&#x27;, {
+        is: &#x27;sqlite&#x27;,
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+    DB_DATABASE: Joi.string().when(&#x27;DB_TYPE&#x27;, {
+        is: &#x27;sqlite&#x27;,
+        then: Joi.optional(),
+        otherwise: Joi.required(),
+    }),
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/crypto/key/crypto/ed25519.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ED25519"></a>
+                    <span class="name">
+                        <span ><b>ED25519</b></span>
+                        <a href="#ED25519"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/CryptoImplementation.html" target="_self" >CryptoImplementation</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    alg: &#x27;EdDSA&#x27;,
+    async generateKeyPair() {
+        const keyPair &#x3D; await crypto.webcrypto.subtle.generateKey(
+            {
+                name: &#x27;EdDSA&#x27;,
+                namedCurve: &#x27;Ed25519&#x27;,
+            },
+            true,
+            [&#x27;sign&#x27;, &#x27;verify&#x27;],
+        );
+
+        const publicKey &#x3D; await crypto.webcrypto.subtle.exportKey(
+            &#x27;jwk&#x27;,
+            keyPair.publicKey,
+        );
+        const privateKey &#x3D; await crypto.webcrypto.subtle.exportKey(
+            &#x27;jwk&#x27;,
+            keyPair.privateKey,
+        );
+
+        return { publicKey, privateKey };
+    },
+    async getSigner(privateKeyJWK: object) {
+        const privateKey &#x3D; await crypto.webcrypto.subtle.importKey(
+            &#x27;jwk&#x27;,
+            privateKeyJWK,
+            {
+                name: &#x27;EdDSA&#x27;,
+                namedCurve: &#x27;Ed25519&#x27;,
+            },
+            false,
+            [&#x27;sign&#x27;],
+        );
+
+        return async (data: string) &#x3D;&gt; {
+            const signature &#x3D; await crypto.webcrypto.subtle.sign(
+                &#x27;EdDSA&#x27;,
+                privateKey,
+                new TextEncoder().encode(data),
+            );
+
+            return Buffer.from(signature).toString(&#x27;base64url&#x27;);
+        };
+    },
+    async getVerifier(publicKeyJWK: object) {
+        const publicKey &#x3D; await crypto.webcrypto.subtle.importKey(
+            &#x27;jwk&#x27;,
+            publicKeyJWK,
+            {
+                name: &#x27;EdDSA&#x27;,
+                namedCurve: &#x27;Ed25519&#x27;,
+            },
+            false,
+            [&#x27;verify&#x27;],
+        );
+
+        return async (data: string, signatureBase64url: string) &#x3D;&gt; {
+            const signature &#x3D; Buffer.from(signatureBase64url, &#x27;base64url&#x27;);
+            const isVerified &#x3D; await crypto.webcrypto.subtle.verify(
+                &#x27;EdDSA&#x27;,
+                publicKey,
+                signature,
+                new TextEncoder().encode(data),
+            );
+
+            return isVerified;
+        };
+    },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/auth/public.decorator.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="IS_PUBLIC_KEY"></a>
+                    <span class="name">
+                        <span ><b>IS_PUBLIC_KEY</b></span>
+                        <a href="#IS_PUBLIC_KEY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;isPublic&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Public"></a>
+                    <span class="name">
+                        <span ><b>Public</b></span>
+                        <a href="#Public"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; SetMetadata(IS_PUBLIC_KEY, true)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/issuer/issuer.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ISSUER_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>ISSUER_VALIDATION_SCHEMA</b></span>
+                        <a href="#ISSUER_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    PUBLIC_URL: Joi.string(),
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/crypto/key/key.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="KEY_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>KEY_VALIDATION_SCHEMA</b></span>
+                        <a href="#KEY_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    KM_TYPE: Joi.string().valid(&#x27;file&#x27;, &#x27;vault&#x27;).default(&#x27;file&#x27;),
+
+    // Vault-related config
+    VAULT_URL: Joi.string().uri().when(&#x27;KM_TYPE&#x27;, {
+        is: &#x27;vault&#x27;,
+        then: Joi.required(),
+        otherwise: Joi.optional(),
+    }),
+    VAULT_TOKEN: Joi.string().when(&#x27;KM_TYPE&#x27;, {
+        is: &#x27;vault&#x27;,
+        then: Joi.required(),
+        otherwise: Joi.optional(),
+    }),
+    VAULT_KEY_ID: Joi.string().when(&#x27;KM_TYPE&#x27;, {
+        is: &#x27;vault&#x27;,
+        then: Joi.string().default(&#x27;key-id&#x27;),
+        otherwise: Joi.optional(),
+    }),
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/registrar/registrar.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="REGISTRAR_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>REGISTRAR_VALIDATION_SCHEMA</b></span>
+                        <a href="#REGISTRAR_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    REGISTRAR_URL: Joi.string(),
+    REGISTRAR_OIDC_URL: Joi.string().when(&#x27;REGISTRAR_URL&#x27;, {
+        is: Joi.exist(),
+        then: Joi.required(),
+    }),
+    REGISTRAR_OIDC_CLIENT_ID: Joi.string().when(&#x27;REGISTRAR_URL&#x27;, {
+        is: Joi.exist(),
+        then: Joi.required(),
+    }),
+    REGISTRAR_OIDC_CLIENT_SECRET: Joi.string().when(&#x27;REGISTRAR_URL&#x27;, {
+        is: Joi.exist(),
+        then: Joi.required(),
+    }),
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Validation schema for the registrar module.
+Defines the required environment variables and their types.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/utils/logger/session-logger.decorator.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SESSION_LOGGER_KEY"></a>
+                    <span class="name">
+                        <span ><b>SESSION_LOGGER_KEY</b></span>
+                        <a href="#SESSION_LOGGER_KEY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;session-logger&#x27;</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Key for session logger metadata.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SessionLogger"></a>
+                    <span class="name">
+                        <span ><b>SessionLogger</b></span>
+                        <a href="#SessionLogger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(
+    sessionIdParam: string,
+    flowType: &#x27;OID4VCI&#x27; | &#x27;OID4VP&#x27;,
+) &#x3D;&gt; SetMetadata(SESSION_LOGGER_KEY, { sessionIdParam, flowType })</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Decorator to mark methods that should have session-based logging</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/session/session.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SESSION_VALIDATION_SCHEMA"></a>
+                    <span class="name">
+                        <span ><b>SESSION_VALIDATION_SCHEMA</b></span>
+                        <a href="#SESSION_VALIDATION_SCHEMA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    SESSION_TIDY_UP_INTERVAL: Joi.number().default(60 * 60), // default to every hour
+    SESSION_TTL: Joi.number().default(24 * 60 * 60), // default to 24 hours
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Module for managing user sessions.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/auth/tenant-events.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TENANT_EVENTS"></a>
+                    <span class="name">
+                        <span ><b>TENANT_EVENTS</b></span>
+                        <a href="#TENANT_EVENTS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    TENANT_INIT: &#x27;tenant.init&#x27;,
+    TENANT_KEYS: &#x27;tenant.keys&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/auth/token.decorator.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Token"></a>
+                    <span class="name">
+                        <span ><b>Token</b></span>
+                        <a href="#Token"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createParamDecorator(
+    (data: unknown, ctx: ExecutionContext) &#x3D;&gt; {
+        const request &#x3D; ctx.switchToHttp().getRequest();
+        return request.user as TokenPayload; // Access the token payload on the request object
+    },
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
