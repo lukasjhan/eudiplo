@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content interface">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -156,7 +174,6 @@
                                         </a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
                                         <a href="#subject" 
 >
                                             subject
@@ -276,11 +293,6 @@
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
 
 
 
@@ -292,15 +304,15 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { ConfigService } from &#x27;@nestjs/config&#x27;;
-import { SignJWT, jwtVerify, decodeJwt } from &#x27;jose&#x27;;
-import { TokenPayload } from &#x27;./token.decorator&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@nestjs/common&quot;;
+import { ConfigService } from &quot;@nestjs/config&quot;;
+import { jwtVerify, SignJWT } from &quot;jose&quot;;
+import { InternalTokenPayload, TokenPayload } from &quot;./token.decorator&quot;;
 
 export interface GenerateTokenOptions {
     expiresIn?: string;
     audience?: string;
-    subject?: string;
+    subject: string;
 }
 
 @Injectable()
@@ -311,30 +323,30 @@ export class JwtService {
      * Generate a JWT token for integrated OAuth2 server
      */
     async generateToken(
-        payload: TokenPayload,
-        options: GenerateTokenOptions &#x3D; {},
+        payload: InternalTokenPayload,
+        options: GenerateTokenOptions,
     ): Promise&lt;string&gt; {
         if (this.isUsingExternalOIDC()) {
             throw new Error(
-                &#x27;Token generation is not available when using external OIDC provider. Use your external OIDC provider for token generation.&#x27;,
+                &quot;Token generation is not available when using external OIDC provider. Use your external OIDC provider for token generation.&quot;,
             );
         }
 
-        const secret &#x3D; this.configService.getOrThrow&lt;string&gt;(&#x27;JWT_SECRET&#x27;);
-        const issuer &#x3D; this.configService.getOrThrow&lt;string&gt;(&#x27;JWT_ISSUER&#x27;);
+        const secret &#x3D; this.configService.getOrThrow&lt;string&gt;(&quot;MASTER_SECRET&quot;);
+        const issuer &#x3D; this.configService.getOrThrow&lt;string&gt;(&quot;JWT_ISSUER&quot;);
         const expiresIn &#x3D;
             options.expiresIn ||
-            this.configService.getOrThrow&lt;string&gt;(&#x27;JWT_EXPIRES_IN&#x27;);
+            this.configService.getOrThrow&lt;string&gt;(&quot;JWT_EXPIRES_IN&quot;);
 
         const secretKey &#x3D; new TextEncoder().encode(secret);
 
         const jwt &#x3D; new SignJWT({
             ...payload,
         })
-            .setProtectedHeader({ alg: &#x27;HS256&#x27; })
+            .setProtectedHeader({ alg: &quot;HS256&quot; })
             .setIssuedAt()
             .setIssuer(issuer)
-            .setSubject(options.subject || payload.sub)
+            .setSubject(options.subject)
             .setExpirationTime(expiresIn);
 
         if (options.audience) {
@@ -350,35 +362,23 @@ export class JwtService {
     async verifyToken(token: string): Promise&lt;TokenPayload&gt; {
         if (this.isUsingExternalOIDC()) {
             throw new Error(
-                &#x27;Token verification is handled by external OIDC provider.&#x27;,
+                &quot;Token verification is handled by external OIDC provider.&quot;,
             );
         }
 
-        const secret &#x3D; this.configService.getOrThrow&lt;string&gt;(&#x27;JWT_SECRET&#x27;);
-        const issuer &#x3D; this.configService.getOrThrow&lt;string&gt;(&#x27;JWT_ISSUER&#x27;);
+        const secret &#x3D; this.configService.getOrThrow&lt;string&gt;(&quot;MASTER_SECRET&quot;);
+        const issuer &#x3D; this.configService.getOrThrow&lt;string&gt;(&quot;JWT_ISSUER&quot;);
 
         const secretKey &#x3D; new TextEncoder().encode(secret);
 
         try {
-            const { payload } &#x3D; await jwtVerify(token, secretKey, {
+            const { payload } &#x3D; (await jwtVerify(token, secretKey, {
                 issuer,
-                algorithms: [&#x27;HS256&#x27;],
-            });
-
-            return payload as TokenPayload;
-        } catch (error) {
+                algorithms: [&quot;HS256&quot;],
+            })) as { payload: TokenPayload };
+            return payload;
+        } catch (error: any) {
             throw new Error(&#x60;Invalid token: ${error.message}&#x60;);
-        }
-    }
-
-    /**
-     * Decode token without verification (for debugging)
-     */
-    decodeToken(token: string): TokenPayload | null {
-        try {
-            return decodeJwt(token) as TokenPayload;
-        } catch {
-            return null;
         }
     }
 
@@ -386,7 +386,7 @@ export class JwtService {
      * Check if the service is using external OIDC provider
      */
     isUsingExternalOIDC(): boolean {
-        return this.configService.get&lt;string&gt;(&#x27;OIDC&#x27;) !&#x3D;&#x3D; undefined;
+        return this.configService.get&lt;string&gt;(&quot;OIDC&quot;) !&#x3D;&#x3D; undefined;
     }
 }
 </code></pre>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content module">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -152,8 +170,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="36"
-                                    class="link-to-prism">src/crypto/key/key.module.ts:36</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/crypto/key/key.module.ts:22</a></div>
                         </td>
                     </tr>
 
@@ -174,37 +192,23 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DynamicModule, Global, Module } from &#x27;@nestjs/common&#x27;;
-import { FileSystemKeyService } from &#x27;./filesystem-key.service&#x27;;
-import { VaultKeyService } from &#x27;./vault-key.service&#x27;;
-import { CryptoModule } from &#x27;./crypto/crypto.module&#x27;;
-import { CryptoService } from &#x27;./crypto/crypto.service&#x27;;
-import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;;
-import { HttpModule, HttpService } from &#x27;@nestjs/axios&#x27;;
-import * as Joi from &#x27;joi&#x27;;
-import { TypeOrmModule } from &#x27;@nestjs/typeorm/dist/typeorm.module&#x27;;
-import { KeyEntity } from &#x27;./entities/key.entity&#x27;;
-
-export const KEY_VALIDATION_SCHEMA &#x3D; {
-    KM_TYPE: Joi.string().valid(&#x27;file&#x27;, &#x27;vault&#x27;).default(&#x27;file&#x27;),
-
-    // Vault-related config
-    VAULT_URL: Joi.string().uri().when(&#x27;KM_TYPE&#x27;, {
-        is: &#x27;vault&#x27;,
-        then: Joi.required(),
-        otherwise: Joi.optional(),
-    }),
-    VAULT_TOKEN: Joi.string().when(&#x27;KM_TYPE&#x27;, {
-        is: &#x27;vault&#x27;,
-        then: Joi.required(),
-        otherwise: Joi.optional(),
-    }),
-    VAULT_KEY_ID: Joi.string().when(&#x27;KM_TYPE&#x27;, {
-        is: &#x27;vault&#x27;,
-        then: Joi.string().default(&#x27;key-id&#x27;),
-        otherwise: Joi.optional(),
-    }),
-};
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpModule, HttpService } from &quot;@nestjs/axios&quot;;
+import { DynamicModule, Global, Module } from &quot;@nestjs/common&quot;;
+import { ConfigModule, ConfigService } from &quot;@nestjs/config&quot;;
+import { getRepositoryToken, TypeOrmModule } from &quot;@nestjs/typeorm&quot;;
+import { Repository } from &quot;typeorm&quot;;
+import { TenantEntity } from &quot;../../auth/tenant/entitites/tenant.entity&quot;;
+import { ConfigImportService } from &quot;../../shared/utils/config-import/config-import.service&quot;;
+import { ConfigImportOrchestratorService } from &quot;../../shared/utils/config-import/config-import-orchestrator.service&quot;;
+import { DBKeyService } from &quot;./adapters/db-key.service&quot;;
+import { VaultKeyService } from &quot;./adapters/vault-key.service&quot;;
+import { CertService } from &quot;./cert/cert.service&quot;;
+import { CrlValidationService } from &quot;./cert/crl-validation.service&quot;;
+import { CryptoImplementatationModule } from &quot;./crypto-implementation/crypto-implementation.module&quot;;
+import { CryptoImplementationService } from &quot;./crypto-implementation/crypto-implementation.service&quot;;
+import { CertEntity } from &quot;./entities/cert.entity&quot;;
+import { CertUsageEntity } from &quot;./entities/cert-usage.entity&quot;;
+import { KeyEntity } from &quot;./entities/keys.entity&quot;;
 
 @Global()
 @Module({})
@@ -215,37 +219,68 @@ export class KeyModule {
             imports: [
                 HttpModule,
                 ConfigModule,
-                CryptoModule,
-                TypeOrmModule.forFeature([KeyEntity]),
+                CryptoImplementatationModule,
+                TypeOrmModule.forFeature([
+                    CertEntity,
+                    CertUsageEntity,
+                    KeyEntity,
+                    TenantEntity,
+                ]),
             ],
             providers: [
+                CertService,
+                CrlValidationService,
                 {
-                    provide: &#x27;KeyService&#x27;,
+                    provide: &quot;KeyService&quot;,
                     useFactory: (
                         configService: ConfigService,
                         httpService: HttpService,
-                        cryptoService: CryptoService,
+                        cryptoService: CryptoImplementationService,
+                        keyRepository: Repository&lt;KeyEntity&gt;,
+                        configImportService: ConfigImportService,
+                        certRepository: Repository&lt;CertEntity&gt;,
+                        tenantRepository: Repository&lt;TenantEntity&gt;,
+                        configImportOrchestrator: ConfigImportOrchestratorService,
                     ) &#x3D;&gt; {
-                        const kmType &#x3D; configService.get&lt;&#x27;vault&#x27; | &#x27;file&#x27;&gt;(
-                            &#x27;KM_TYPE&#x27;,
+                        const kmType &#x3D; configService.get&lt;&quot;vault&quot; | &quot;file&quot;&gt;(
+                            &quot;KM_TYPE&quot;,
                         );
-                        if (kmType &#x3D;&#x3D;&#x3D; &#x27;vault&#x27;) {
+                        if (kmType &#x3D;&#x3D;&#x3D; &quot;vault&quot;) {
                             return new VaultKeyService(
                                 httpService,
                                 configService,
                                 cryptoService,
+                                keyRepository,
+                                configImportService,
+                                certRepository,
+                                tenantRepository,
+                                configImportOrchestrator,
                             );
                         }
 
-                        return new FileSystemKeyService(
+                        return new DBKeyService(
                             configService,
                             cryptoService,
+                            keyRepository,
+                            configImportService,
+                            certRepository,
+                            tenantRepository,
+                            configImportOrchestrator,
                         );
                     },
-                    inject: [ConfigService, HttpService, CryptoService],
+                    inject: [
+                        ConfigService,
+                        HttpService,
+                        CryptoImplementationService,
+                        getRepositoryToken(KeyEntity),
+                        ConfigImportService,
+                        getRepositoryToken(CertEntity),
+                        getRepositoryToken(TenantEntity),
+                        ConfigImportOrchestratorService,
+                    ],
                 },
             ],
-            exports: [&#x27;KeyService&#x27;],
+            exports: [&quot;KeyService&quot;, CertService, CrlValidationService],
         };
     }
 }

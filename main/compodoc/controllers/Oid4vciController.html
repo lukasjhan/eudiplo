@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content controller">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -113,9 +131,8 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/issuer/oid4vci/oid4vci.controller.ts</code>
+            <code>src/issuer/issuance/oid4vci/oid4vci.controller.ts</code>
         </p>
-
             <p class="comment">
                 <h3>Prefix</h3>
             </p>
@@ -124,6 +141,13 @@
             </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Controller for handling OID4VCI (OpenID for Verifiable Credential Issuance) requests.</p>
+
+            </p>
 
 
 
@@ -144,7 +168,21 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
                                 <a href="#credential" >credential</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#deferredCredential" >deferredCredential</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#nonce" >nonce</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -176,6 +214,8 @@
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
                         <span ><b>credential</b></span>
                         <a href="#credential"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -184,7 +224,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>credential(req: Request, tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>credential(req: Request, res: Response, tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -192,14 +232,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;credential&#x27;)<br />@SessionLogger(&#x27;state&#x27;, &#x27;OID4VCI&#x27;)<br /></code>
+                    <code>@Post(&#x27;credential&#x27;)<br />@HttpCode(HttpStatus.OK)<br />@SessionLogger(&#x27;session&#x27;, &#x27;OID4VCI&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="28"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.controller.ts:28</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.controller.ts:44</a></div>
                         </td>
                     </tr>
 
@@ -234,6 +274,18 @@
 
                                         </tr>
                                         <tr>
+                                                <td>res</td>
+                                            <td>
+                                                        <code>Response</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
                                                 <td>tenantId</td>
                                             <td>
                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -249,7 +301,205 @@
                                 </table>
                             </div>
                         <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;CredentialResponse | literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deferredCredential"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>deferredCredential</b></span>
+                        <a href="#deferredCredential"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deferredCredential(req: Request, body: <a href="../classes/DeferredCredentialRequestDto.html" target="_self">DeferredCredentialRequestDto</a>, tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;deferred_credential&#x27;)<br />@SessionLogger(&#x27;transaction_id&#x27;, &#x27;OID4VCI&#x27;)<br />@HttpCode(HttpStatus.OK)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.controller.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deferred Credential Endpoint</p>
+<p>According to OID4VCI Section 9, this endpoint is used by the wallet to poll
+for credentials that were not immediately available.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>req</td>
+                                            <td>
+                                                        <code>Request</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The request</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>body</td>
+                                            <td>
+                                                            <code><a href="../classes/DeferredCredentialRequestDto.html" target="_self" >DeferredCredentialRequestDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The deferred credential request containing transaction_id</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The tenant ID</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
                             <b>Returns : </b>    <code>Promise&lt;CredentialResponse&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The credential response if ready, or issuance_pending error</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nonce"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>nonce</b></span>
+                        <a href="#nonce"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nonce(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;nonce&#x27;)<br />@HttpCode(HttpStatus.OK)<br />@Header(&#x27;Cache-Control&#x27;, &#x27;no-store&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.controller.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                         </div>
                             <div class="io-description">
@@ -289,8 +539,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="42"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.controller.ts:42</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.controller.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -368,20 +618,33 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
     Body,
+    ConflictException,
     Controller,
+    Header,
+    HttpCode,
+    HttpStatus,
     Param,
     Post,
     Req,
+    Res,
     UseInterceptors,
-} from &#x27;@nestjs/common&#x27;;
-import type { CredentialResponse } from &#x27;@openid4vc/openid4vci&#x27;;
-import type { Request } from &#x27;express&#x27;;
-import { Oid4vciService } from &#x27;../../issuer/oid4vci/oid4vci.service&#x27;;
-import { NotificationRequestDto } from &#x27;./dto/notification-request.dto&#x27;;
-import { SessionLogger } from &#x27;../../utils/logger//session-logger.decorator&#x27;;
-import { SessionLoggerInterceptor } from &#x27;../../utils/logger/session-logger.interceptor&#x27;;
+} from &quot;@nestjs/common&quot;;
+import { ApiExcludeController, ApiParam, ApiTags } from &quot;@nestjs/swagger&quot;;
+import type { CredentialResponse } from &quot;@openid4vc/openid4vci&quot;;
+import type { Request, Response } from &quot;express&quot;;
+import { SessionLogger } from &quot;../../../shared/utils/logger/session-logger.decorator&quot;;
+import { SessionLoggerInterceptor } from &quot;../../../shared/utils/logger/session-logger.interceptor&quot;;
+import { DeferredCredentialRequestDto } from &quot;./dto/deferred-credential-request.dto&quot;;
+import { NotificationRequestDto } from &quot;./dto/notification-request.dto&quot;;
+import { Oid4vciService } from &quot;./oid4vci.service&quot;;
 
-@Controller(&#x27;:tenantId/vci&#x27;)
+/**
+ * Controller for handling OID4VCI (OpenID for Verifiable Credential Issuance) requests.
+ */
+@ApiTags(&quot;OID4VCI&quot;)
+@ApiParam({ name: &quot;tenantId&quot;, required: true })
+@ApiExcludeController(process.env.SWAGGER_ALL !&#x3D;&#x3D; &quot;true&quot;)
+@Controller(&quot;:tenantId/vci&quot;)
 @UseInterceptors(SessionLoggerInterceptor)
 export class Oid4vciController {
     constructor(private readonly oid4vciService: Oid4vciService) {}
@@ -389,15 +652,59 @@ export class Oid4vciController {
     /**
      * Endpoint to issue credentials
      * @param req
+     * @param res
+     * @param tenantId
      * @returns
      */
-    @Post(&#x27;credential&#x27;)
-    @SessionLogger(&#x27;state&#x27;, &#x27;OID4VCI&#x27;)
-    credential(
+    @Post(&quot;credential&quot;)
+    @HttpCode(HttpStatus.OK)
+    @SessionLogger(&quot;session&quot;, &quot;OID4VCI&quot;)
+    async credential(
         @Req() req: Request,
-        @Param(&#x27;tenantId&#x27;) tenantId: string,
+        @Res({ passthrough: true }) res: Response,
+        @Param(&quot;tenantId&quot;) tenantId: string,
+    ): Promise&lt;
+        CredentialResponse | { transaction_id: string; interval?: number }
+    &gt; {
+        return this.oid4vciService.getCredential(req, tenantId).then(
+            (result) &#x3D;&gt; {
+                // Check if this is a deferred response (has non-null transaction_id)
+                // Note: Using truthiness check because CredentialResponse type may include
+                // transaction_id as optional property with undefined value
+                if (&quot;transaction_id&quot; in result &amp;&amp; result.transaction_id) {
+                    res.status(HttpStatus.ACCEPTED);
+                }
+                return result;
+            },
+            (err) &#x3D;&gt; {
+                //TODO: implement errors according to: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-request-errors
+                throw new ConflictException(
+                    &#x60;Credential issuance failed: ${err.message}&#x60;,
+                );
+            },
+        );
+    }
+
+    /**
+     * Deferred Credential Endpoint
+     *
+     * According to OID4VCI Section 9, this endpoint is used by the wallet to poll
+     * for credentials that were not immediately available.
+     *
+     * @param req The request
+     * @param body The deferred credential request containing transaction_id
+     * @param tenantId The tenant ID
+     * @returns The credential response if ready, or issuance_pending error
+     */
+    @Post(&quot;deferred_credential&quot;)
+    @SessionLogger(&quot;transaction_id&quot;, &quot;OID4VCI&quot;)
+    @HttpCode(HttpStatus.OK)
+    deferredCredential(
+        @Req() req: Request,
+        @Body() body: DeferredCredentialRequestDto,
+        @Param(&quot;tenantId&quot;) tenantId: string,
     ): Promise&lt;CredentialResponse&gt; {
-        return this.oid4vciService.getCredential(req, tenantId);
+        return this.oid4vciService.getDeferredCredential(req, body, tenantId);
     }
 
     /**
@@ -405,26 +712,25 @@ export class Oid4vciController {
      * @param body
      * @returns
      */
-    @Post(&#x27;notification&#x27;)
-    @SessionLogger(&#x27;notification_id&#x27;, &#x27;OID4VCI&#x27;)
+    @Post(&quot;notification&quot;)
+    @SessionLogger(&quot;notification_id&quot;, &quot;OID4VCI&quot;)
     notifications(
         @Body() body: NotificationRequestDto,
         @Req() req: Request,
-        @Param(&#x27;tenantId&#x27;) tenantId: string,
+        @Param(&quot;tenantId&quot;) tenantId: string,
     ) {
         return this.oid4vciService.handleNotification(req, body, tenantId);
     }
 
-    //TODO: this endpoint may be relevant for the wallet attestation.
-    /* @Get(&#x27;session&#x27;)
-  session() {
-    console.log(&#x27;Session requested&#x27;);
-    //TODO store session and created at
-    const session &#x3D; randomUUID();
-    return {
-      session_id: session,
-    };
-  } */
+    @Post(&quot;nonce&quot;)
+    @HttpCode(HttpStatus.OK)
+    @Header(&quot;Cache-Control&quot;, &quot;no-store&quot;)
+    nonce(@Param(&quot;tenantId&quot;) tenantId: string) {
+        //TODO: maybe also add it into the header, see https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-nonce-response
+        return this.oid4vciService.nonceRequest(tenantId).then((nonce) &#x3D;&gt; ({
+            c_nonce: nonce,
+        }));
+    }
 }
 </code></pre>
     </div>

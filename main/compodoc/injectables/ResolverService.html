@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -144,7 +162,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Async</span>
                                 <a href="#resolvePublicKey" >resolvePublicKey</a>
                             </li>
                         </ul>
@@ -159,54 +176,6 @@
     </table>
 </section>
 
-            <section data-compodoc="block-constructor">
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor(httpService: HttpService)</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/verifier/resolver/resolver.service.ts:12</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>httpService</td>
-                                                  
-                                                        <td>
-                                                                    <code>HttpService</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-</section>
 
             <section data-compodoc="block-methods">
     
@@ -219,7 +188,6 @@
                 <td class="col-md-4">
                     <a name="resolvePublicKey"></a>
                     <span class="name">
-                            <span class="modifier">Async</span>
                         <span ><b>resolvePublicKey</b></span>
                         <a href="#resolvePublicKey"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -227,23 +195,22 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolvePublicKey(payload: JWTPayload, header: JWK)</code>
+<code>resolvePublicKey(header: JWK)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="21"
-                                    class="link-to-prism">src/verifier/resolver/resolver.service.ts:21</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="16"
+                                    class="link-to-prism">src/verifier/resolver/resolver.service.ts:16</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Resolve the public key from the issuer, the function will first check for the x5c header, then for the did document and finally for the issuer metadata.</p>
+                        <div class="io-description"><p>Resolve the public key from the issuer, x5c header only supported.</p>
 </div>
 
                             <div class="io-description">
@@ -258,18 +225,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                                <td>payload</td>
-                                            <td>
-                                                        <code>JWTPayload</code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
                                         <tr>
                                                 <td>header</td>
                                             <td>
@@ -302,62 +257,35 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ConflictException, Injectable } from &#x27;@nestjs/common&#x27;;
-import { JWK, JWTPayload } from &#x27;jose&#x27;;
-import { HttpService } from &#x27;@nestjs/axios&#x27;;
-import { firstValueFrom } from &#x27;rxjs&#x27;;
-import { X509Certificate } from &#x27;node:crypto&#x27;;
-import { IssuerMetadata } from &#x27;./dto/issuer-metadata.dto&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { X509Certificate } from &quot;node:crypto&quot;;
+import { ConflictException, Injectable } from &quot;@nestjs/common&quot;;
+import { JWK } from &quot;jose&quot;;
 
 /**
  * Service for resolving public keys from JWT payloads and headers.
  */
 @Injectable()
 export class ResolverService {
-    constructor(private httpService: HttpService) {}
-
     /**
-     * Resolve the public key from the issuer, the function will first check for the x5c header, then for the did document and finally for the issuer metadata.
+     * Resolve the public key from the issuer, x5c header only supported.
      * @param payload
      * @param header
      * @returns
      */
-    async resolvePublicKey(payload: JWTPayload, header: JWK): Promise&lt;JWK&gt; {
-        if (!payload.iss) {
-            throw new Error(&#x27;Issuer not found&#x27;);
-        }
-
+    resolvePublicKey(header: JWK): Promise&lt;JWK&gt; {
+        //we ignore is iss value since it is no required when using x5c: https://www.ietf.org/archive/id/draft-ietf-oauth-sd-jwt-vc-13.html#name-registered-jwt-claims
         if (header.x5c) {
             //TODO: validate the certificate and the chain of trust!
             const certs &#x3D; header.x5c.map(
-                (cert) &#x3D;&gt; new X509Certificate(Buffer.from(cert, &#x27;base64&#x27;)),
+                (cert) &#x3D;&gt; new X509Certificate(Buffer.from(cert, &quot;base64&quot;)),
             );
             const cert &#x3D; certs[0];
-            if (!cert.subjectAltName?.includes(new URL(payload.iss).hostname)) {
-                throw new Error(&#x27;Subject and issuer do not match&#x27;);
-            }
-            return cert.publicKey.export({ format: &#x27;jwk&#x27; }) as JWK;
+            return Promise.resolve(
+                cert.publicKey.export({ format: &quot;jwk&quot; }) as JWK,
+            );
+        } else {
+            throw new ConflictException(&quot;No x5c header found in the JWT&quot;);
         }
-        //checl if the key is in the header as jwk
-        if (header[&#x27;jwk&#x27;]) {
-            return header[&#x27;jwk&#x27;] as JWK;
-        }
-
-        const response &#x3D; await firstValueFrom(
-            this.httpService.get&lt;IssuerMetadata&gt;(
-                &#x60;${payload.iss}/.well-known/jwt-vc-issuer&#x60;,
-            ),
-        ).then(
-            (r) &#x3D;&gt; r.data,
-            () &#x3D;&gt; {
-                throw new ConflictException(&#x27;Issuer not reachable&#x27;);
-            },
-        );
-        const key &#x3D; response.jwks.keys.find((key) &#x3D;&gt; key.kid &#x3D;&#x3D;&#x3D; header.kid);
-        if (!key) {
-            throw new Error(&#x27;Key not found&#x27;);
-        }
-        return key;
     }
 }
 </code></pre>

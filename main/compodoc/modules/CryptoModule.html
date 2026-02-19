@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content module">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -238,6 +256,19 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
+                    <h3>Controllers<a href="https://docs.nestjs.com/controllers" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module controllers"><span
+                                class="icon ion-ios-information-circle-outline"></a></h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="../controllers/KeyController.html">KeyController</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../controllers/CertController.html">CertController</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
                     <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module exports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
@@ -258,12 +289,27 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
-import { CryptoService } from &#x27;./crypto.service&#x27;;
-import { EncryptionService } from &#x27;./encryption/encryption.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &quot;@nestjs/common&quot;;
+import { TypeOrmModule } from &quot;@nestjs/typeorm&quot;;
+import { TenantEntity } from &quot;../auth/tenant/entitites/tenant.entity&quot;;
+import { CryptoService } from &quot;./crypto.service&quot;;
+import { EncryptionService } from &quot;./encryption/encryption.service&quot;;
+import { CertController } from &quot;./key/cert/cert.controller&quot;;
+import { CertEntity } from &quot;./key/entities/cert.entity&quot;;
+import { CertUsageEntity } from &quot;./key/entities/cert-usage.entity&quot;;
+import { KeyEntity } from &quot;./key/entities/keys.entity&quot;;
+import { KeyController } from &quot;./key/key.controller&quot;;
 
 @Module({
-    imports: [],
+    imports: [
+        TypeOrmModule.forFeature([
+            CertEntity,
+            CertUsageEntity,
+            KeyEntity,
+            TenantEntity,
+        ]),
+    ],
+    controllers: [KeyController, CertController],
     providers: [CryptoService, EncryptionService],
     exports: [CryptoService, EncryptionService],
 })

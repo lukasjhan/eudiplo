@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -116,7 +134,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/utils/logger/logger-config.service.ts</code>
+            <code>src/shared/utils/logger/logger-config.service.ts</code>
         </p>
 
 
@@ -162,6 +180,9 @@
                                 <a href="#getConfiguration" >getConfiguration</a>
                             </li>
                             <li>
+                                <a href="#getLogFilePath" >getLogFilePath</a>
+                            </li>
+                            <li>
                                 <a href="#getLogFormat" >getLogFormat</a>
                             </li>
                             <li>
@@ -169,6 +190,9 @@
                             </li>
                             <li>
                                 <a href="#isDebugModeEnabled" >isDebugModeEnabled</a>
+                            </li>
+                            <li>
+                                <a href="#isFileLoggingEnabled" >isFileLoggingEnabled</a>
                             </li>
                             <li>
                                 <a href="#isHttpLoggerEnabled" >isHttpLoggerEnabled</a>
@@ -213,7 +237,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/utils/logger/logger-config.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -276,8 +300,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="58"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -287,6 +311,45 @@
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/LoggerConfiguration.html" target="_self" >LoggerConfiguration</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getLogFilePath"></a>
+                    <span class="name">
+                        <span ><b>getLogFilePath</b></span>
+                        <a href="#getLogFilePath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getLogFilePath()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:92</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the configured file path for logging</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </div>
                 </td>
@@ -313,8 +376,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="79"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:79</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:78</a></div>
                         </td>
                     </tr>
 
@@ -350,8 +413,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="75"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:75</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -387,14 +450,53 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="71"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:71</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:70</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFileLoggingEnabled"></a>
+                    <span class="name">
+                        <span ><b>isFileLoggingEnabled</b></span>
+                        <a href="#isFileLoggingEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isFileLoggingEnabled()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if logging to file is enabled</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
@@ -424,8 +526,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="67"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:67</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:66</a></div>
                         </td>
                     </tr>
 
@@ -461,8 +563,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="63"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:63</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:62</a></div>
                         </td>
                     </tr>
 
@@ -500,8 +602,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="23"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:23</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="25"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:25</a></div>
                         </td>
                     </tr>
 
@@ -539,8 +641,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="47"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:47</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:46</a></div>
                         </td>
                     </tr>
 
@@ -606,8 +708,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="86"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:86</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -645,8 +747,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="94"
-                                    class="link-to-prism">src/utils/logger/logger-config.service.ts:94</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:107</a></div>
                         </td>
                     </tr>
 
@@ -691,7 +793,7 @@ This is used by the LoggerModule configuration</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/utils/logger/logger-config.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/shared/utils/logger/logger-config.service.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -704,15 +806,17 @@ This is used by the LoggerModule configuration</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, LogLevel } from &#x27;@nestjs/common&#x27;;
-import { ConfigService } from &#x27;@nestjs/config&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, LogLevel } from &quot;@nestjs/common&quot;;
+import { ConfigService } from &quot;@nestjs/config&quot;;
 
 export interface LoggerConfiguration {
     level: LogLevel;
     enableSessionLogger: boolean;
     enableHttpLogger: boolean;
     enableDebugMode: boolean;
-    logFormat: &#x27;json&#x27; | &#x27;pretty&#x27;;
+    logFormat: &quot;json&quot; | &quot;pretty&quot;;
+    logToFile: boolean;
+    logFilePath: string;
 }
 
 /**
@@ -720,7 +824,7 @@ export interface LoggerConfiguration {
  */
 @Injectable()
 export class LoggerConfigService {
-    private config: LoggerConfiguration;
+    private config!: LoggerConfiguration;
 
     constructor(private readonly configService: ConfigService) {
         this.loadConfiguration();
@@ -729,37 +833,34 @@ export class LoggerConfigService {
     private loadConfiguration(): void {
         this.config &#x3D; {
             level: this.parseLogLevel(
-                this.configService.get&lt;string&gt;(&#x27;LOG_LEVEL&#x27;, &#x27;info&#x27;),
+                this.configService.get&lt;string&gt;(&quot;LOG_LEVEL&quot;, &quot;info&quot;),
             ),
-            enableSessionLogger: this.configService.get&lt;boolean&gt;(
-                &#x27;LOG_ENABLE_SESSION_LOGGER&#x27;,
-                false,
+            enableSessionLogger: this.configService.getOrThrow&lt;boolean&gt;(
+                &quot;LOG_ENABLE_SESSION_LOGGER&quot;,
             ),
-            enableHttpLogger: this.configService.get&lt;boolean&gt;(
-                &#x27;LOG_ENABLE_HTTP_LOGGER&#x27;,
-                false,
+            enableHttpLogger: this.configService.getOrThrow&lt;boolean&gt;(
+                &quot;LOG_ENABLE_HTTP_LOGGER&quot;,
             ),
-            enableDebugMode: this.configService.get&lt;boolean&gt;(
-                &#x27;LOG_DEBUG_MODE&#x27;,
-                false,
+            enableDebugMode:
+                this.configService.getOrThrow&lt;boolean&gt;(&quot;LOG_DEBUG_MODE&quot;),
+            logFormat: this.configService.getOrThrow&lt;&quot;json&quot; | &quot;pretty&quot;&gt;(
+                &quot;LOG_FORMAT&quot;,
             ),
-            logFormat: this.configService.get&lt;&#x27;json&#x27; | &#x27;pretty&#x27;&gt;(
-                &#x27;LOG_FORMAT&#x27;,
-                &#x27;pretty&#x27;,
-            ),
+            logToFile: this.configService.getOrThrow&lt;boolean&gt;(&quot;LOG_TO_FILE&quot;),
+            logFilePath: this.configService.getOrThrow&lt;string&gt;(&quot;LOG_FILE_PATH&quot;),
         };
     }
 
     private parseLogLevel(level: string): LogLevel {
         const levels: Record&lt;string, LogLevel&gt; &#x3D; {
-            verbose: &#x27;verbose&#x27;,
-            debug: &#x27;debug&#x27;,
-            log: &#x27;log&#x27;,
-            warn: &#x27;warn&#x27;,
-            error: &#x27;error&#x27;,
-            fatal: &#x27;fatal&#x27;,
+            verbose: &quot;verbose&quot;,
+            debug: &quot;debug&quot;,
+            log: &quot;log&quot;,
+            warn: &quot;warn&quot;,
+            error: &quot;error&quot;,
+            fatal: &quot;fatal&quot;,
         };
-        return levels[level.toLowerCase()] || &#x27;log&#x27;;
+        return levels[level.toLowerCase()] || &quot;log&quot;;
     }
 
     getConfiguration(): LoggerConfiguration {
@@ -782,8 +883,22 @@ export class LoggerConfigService {
         return this.config.level;
     }
 
-    getLogFormat(): &#x27;json&#x27; | &#x27;pretty&#x27; {
+    getLogFormat(): &quot;json&quot; | &quot;pretty&quot; {
         return this.config.logFormat;
+    }
+
+    /**
+     * Check if logging to file is enabled
+     */
+    isFileLoggingEnabled(): boolean {
+        return this.config.logToFile;
+    }
+
+    /**
+     * Get the configured file path for logging
+     */
+    getLogFilePath(): string {
+        return this.config.logFilePath;
     }
 
     /**

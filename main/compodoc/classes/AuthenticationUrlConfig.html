@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content class">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -120,7 +138,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/issuer/issuance/dto/authentication-config.dto.ts</code>
+            <code>src/issuer/configuration/issuance/dto/authentication-config.dto.ts</code>
         </p>
 
 
@@ -150,10 +168,9 @@ Used for OID4VCI authorized code flow where the user will be redirected for auth
                         <ul class="index-list">
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#authUrl" >authUrl</a>
+                                <a href="#url" >url</a>
                             </li>
                             <li>
-                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -183,11 +200,11 @@ Used for OID4VCI authorized code flow where the user will be redirected for auth
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="authUrl"></a>
+                    <a name="url"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>authUrl</b></span>
-                        <a href="#authUrl"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>url</b></span>
+                        <a href="#url"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -202,13 +219,13 @@ Used for OID4VCI authorized code flow where the user will be redirected for auth
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsUrl()<br />
+                            @IsString()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/issuer/issuance/dto/authentication-config.dto.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/issuer/configuration/issuance/dto/authentication-config.dto.ts:21</a></div>
                         </td>
                     </tr>
 
@@ -231,7 +248,6 @@ This URL is where users will be redirected for authentication.</p>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Optional</span>
                         <span ><b>webhook</b></span>
                         <a href="#webhook"><span class="icon ion-ios-link"></span></a>
@@ -249,13 +265,13 @@ This URL is where users will be redirected for authentication.</p>
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsObject()<br />@IsOptional()<br />@ValidateNested()<br />@Type(undefined)<br />
+                            @IsOptional()<br />@ValidateNested()<br />@Type(undefined)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/issuer/issuance/dto/authentication-config.dto.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/issuer/configuration/issuance/dto/authentication-config.dto.ts:29</a></div>
                         </td>
                     </tr>
 
@@ -280,16 +296,15 @@ This URL is where users will be redirected for authentication.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Type } from &quot;class-transformer&quot;;
+import {
+    IsIn,
     IsObject,
     IsOptional,
-    IsUrl,
-    IsIn,
+    IsString,
     ValidateNested,
-} from &#x27;class-validator&#x27;;
-import { Type } from &#x27;class-transformer&#x27;;
-import { WebhookConfig } from &#x27;../../../utils/webhook/webhook.dto&#x27;;
-import { PresentationDuringIssuance } from &#x27;../../credentials-metadata/dto/credential-config.dto&#x27;;
+} from &quot;class-validator&quot;;
+import { WebhookConfig } from &quot;../../../../shared/utils/webhook/webhook.dto&quot;;
 
 /**
  * Configuration for authentication method &#x27;auth&#x27;
@@ -300,13 +315,12 @@ export class AuthenticationUrlConfig {
      * The URL used in the OID4VCI authorized code flow.
      * This URL is where users will be redirected for authentication.
      */
-    @IsUrl()
-    authUrl: string;
+    @IsString()
+    url!: string;
 
     /**
      * Optional webhook configuration for authentication callbacks
      */
-    @IsObject()
     @IsOptional()
     @ValidateNested()
     @Type(() &#x3D;&gt; WebhookConfig)
@@ -319,49 +333,49 @@ export class AuthenticationUrlConfig {
  */
 export class PresentationDuringIssuanceConfig {
     /**
-     * Presentation configuration that specifies what credentials need to be presented via OID4VP
+     * Link to the presentation configuration that is relevant for the issuance process
      */
+    @IsString()
+    type!: string;
+}
+
+export class AuthenticationMethodPresentation
+    implements AuthenticationMethodInterface
+{
+    @IsString()
+    @IsIn([&quot;presentationDuringIssuance&quot;])
+    method!: &quot;presentationDuringIssuance&quot;;
     @IsObject()
     @ValidateNested()
-    @Type(() &#x3D;&gt; PresentationDuringIssuance)
-    presentation: PresentationDuringIssuance;
+    @Type(() &#x3D;&gt; PresentationDuringIssuanceConfig)
+    config!: PresentationDuringIssuanceConfig;
 }
 
-/**
- * Base class for authentication configurations
- * Determines which OpenID4VC flow to use for the issuance process
- */
-export class AuthenticationConfigDto {
-    /**
-     * The authentication method to use:
-     * - &#x27;none&#x27;: Pre-authorized code flow (no user authentication)
-     * - &#x27;auth&#x27;: OID4VCI authorized code flow (user redirect for authentication)
-     * - &#x27;presentationDuringIssuance&#x27;: OID4VP flow (credential presentation required)
-     */
-    @IsIn([&#x27;none&#x27;, &#x27;auth&#x27;, &#x27;presentationDuringIssuance&#x27;])
-    method: &#x27;none&#x27; | &#x27;auth&#x27; | &#x27;presentationDuringIssuance&#x27;;
-
-    /**
-     * Configuration specific to the selected authentication method
-     * - For &#x27;none&#x27;: no config needed (undefined) - uses pre-authorized code flow
-     * - For &#x27;auth&#x27;: AuthenticationUrlConfig - for OID4VCI authorized code flow
-     * - For &#x27;presentationDuringIssuance&#x27;: PresentationDuringIssuanceConfig - for OID4VP flow
-     */
-    @IsOptional()
-    config?: AuthenticationUrlConfig | PresentationDuringIssuanceConfig;
+export class AuthenticationMethodAuth implements AuthenticationMethodInterface {
+    @IsString()
+    @IsIn([&quot;auth&quot;])
+    method!: &quot;auth&quot;;
+    @IsObject()
+    @ValidateNested()
+    @Type(() &#x3D;&gt; AuthenticationUrlConfig)
+    config!: AuthenticationUrlConfig;
 }
 
-/**
- * Union type for authentication configurations
- * Each method corresponds to a specific OpenID4VC flow
- */
-export type AuthenticationConfig &#x3D;
-    | { method: &#x27;none&#x27; } // Pre-authorized code flow
-    | { method: &#x27;auth&#x27;; config: AuthenticationUrlConfig } // OID4VCI authorized code flow
-    | {
-          method: &#x27;presentationDuringIssuance&#x27;; // OID4VP flow
-          config: PresentationDuringIssuanceConfig;
-      };
+export class AuthenticationMethodNone implements AuthenticationMethodInterface {
+    @IsString()
+    @IsIn([&quot;none&quot;])
+    method!: &quot;none&quot;;
+}
+
+export interface AuthenticationMethodInterface {
+    method: &quot;none&quot; | &quot;auth&quot; | &quot;presentationDuringIssuance&quot;;
+}
+
+export enum AuthenticationMethod {
+    NONE &#x3D; &quot;none&quot;,
+    AUTH &#x3D; &quot;auth&quot;,
+    PRESENTATION_DURING_ISSUANCE &#x3D; &quot;presentationDuringIssuance&quot;,
+}
 </code></pre>
     </div>
 </div>

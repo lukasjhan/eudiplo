@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content controller">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -116,14 +134,14 @@
             <code>src/auth/auth.controller.ts</code>
         </p>
 
+
             <p class="comment">
-                <h3>Prefix</h3>
+                <h3>Description</h3>
             </p>
             <p class="comment">
-                <code>auth</code>
+                <p>Authentication Controller</p>
+
             </p>
-
-
 
 
 
@@ -145,10 +163,20 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                <a href="#getGlobalJwks" >getGlobalJwks</a>
+                            </li>
+                            <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Async</span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                 <a href="#getOAuth2Token" >getOAuth2Token</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#getOidcDiscovery" >getOidcDiscovery</a>
                             </li>
                         </ul>
                     </td>
@@ -171,14 +199,63 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getGlobalJwks"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>getGlobalJwks</b></span>
+                        <a href="#getGlobalJwks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getGlobalJwks()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;.well-known/jwks.json&#x27;)<br />@ApiOperation({summary: &#x27;JSON Web Key Set&#x27;, description: &#x27;Returns the JSON Web Key Set for token verification.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;JSON Web Key Set&#x27;})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/auth/auth.controller.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Global JWKS endpoint for client credentials flow.
+This provides the JSON Web Key Set for verifying tokens issued by this server.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/KeyResponseDto.html" target="_self" >KeyResponseDto</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getOAuth2Token"></a>
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier">Async</span>
                         <span ><b>getOAuth2Token</b></span>
                         <a href="#getOAuth2Token"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -195,14 +272,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Public()<br />@Post(&#x27;oauth2/token&#x27;)<br />@ApiBody({type: ClientCredentialsDto, examples: undefined})<br />@ApiResponse({status: 200, description: &#x27;OAuth2 token response&#x27;, type: TokenResponse, example: undefined})<br />@ApiResponse({status: 401, description: &#x27;Invalid client credentials&#x27;})<br /></code>
+                    <code>@Post(&#x27;oauth2/token&#x27;)<br />@ApiBody({type: ClientCredentialsDto, examples: undefined})<br />@ApiResponse({status: 200, description: &#x27;OAuth2 token response&#x27;, type: TokenResponse, examples: undefined})<br />@ApiResponse({status: 401, description: &#x27;Invalid client credentials&#x27;})<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="60"
-                                    class="link-to-prism">src/auth/auth.controller.ts:60</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/auth/auth.controller.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -263,32 +340,87 @@ Accepts client credentials either in Authorization header (Basic auth) or reques
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOidcDiscovery"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>getOidcDiscovery</b></span>
+                        <a href="#getOidcDiscovery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOidcDiscovery()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;.well-known/oauth-authorization-server&#x27;)<br />@ApiOperation({summary: &#x27;OIDC Discovery Configuration&#x27;, description: &#x27;Returns the OpenID Connect discovery configuration for client credentials authentication.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;OIDC Discovery Configuration&#x27;})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/auth/auth.controller.ts:89</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>OIDC Discovery endpoint for client credentials flow.
+This endpoint provides the OpenID Connect configuration for applications
+that need to authenticate using client_id and client_secret.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/OidcDiscoveryDto.html" target="_self" >OidcDiscoveryDto</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    Controller,
-    Post,
-    Body,
-    UnauthorizedException,
-    Headers,
-} from &#x27;@nestjs/common&#x27;;
-import { ApiTags, ApiResponse, ApiBody } from &#x27;@nestjs/swagger&#x27;;
-import { JwtService } from &#x27;./jwt.service&#x27;;
-import { ClientService } from &#x27;./client.service&#x27;;
-import { Public } from &#x27;./public.decorator&#x27;;
-import { ClientCredentialsDto } from &#x27;./dto/client-credentials.dto&#x27;;
-import { TokenPayload } from &#x27;./token.decorator&#x27;;
-import { TokenResponse } from &#x27;./dto/token-response.dto&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Body, Controller, Get, Headers, Post } from &quot;@nestjs/common&quot;;
+import {
+    ApiBody,
+    ApiExcludeController,
+    ApiExtraModels,
+    ApiOperation,
+    ApiResponse,
+    ApiTags,
+} from &quot;@nestjs/swagger&quot;;
+import { KeyResponseDto } from &quot;../crypto/key/dto/key-response.dto&quot;;
+import { AuthService } from &quot;./auth.service&quot;;
+import { ClientCredentialsDto } from &quot;./dto/client-credentials.dto&quot;;
+import { OidcDiscoveryDto } from &quot;./dto/oidc-discovery.dto&quot;;
+import { RoleDto } from &quot;./dto/role.dto&quot;;
+import { TokenResponse } from &quot;./dto/token-response.dto&quot;;
 
-@ApiTags(&#x27;Authentication&#x27;)
-@Controller(&#x27;auth&#x27;)
+/**
+ * Authentication Controller
+ */
+@ApiExtraModels(RoleDto)
+@ApiExcludeController(process.env.SWAGGER_ALL !&#x3D;&#x3D; &quot;true&quot;)
+@ApiTags(&quot;Authentication&quot;)
+@Controller()
 export class AuthController {
-    constructor(
-        private jwtService: JwtService,
-        private clientService: ClientService,
-    ) {}
+    constructor(private readonly authService: AuthService) {}
 
     /**
      * OAuth2 Token endpoint - supports client credentials flow only
@@ -297,105 +429,83 @@ export class AuthController {
      * @param headers
      * @returns
      */
-    @Public()
-    @Post(&#x27;oauth2/token&#x27;)
+    @Post(&quot;oauth2/token&quot;)
     @ApiBody({
         type: ClientCredentialsDto,
         examples: {
             client_credentials: {
-                summary: &#x27;Client Credentials Flow&#x27;,
+                summary: &quot;Client Credentials Flow&quot;,
                 value: {
-                    grant_type: &#x27;client_credentials&#x27;,
-                    client_id: &#x27;root&#x27;,
-                    client_secret: &#x27;root&#x27;,
+                    grant_type: &quot;client_credentials&quot;,
+                    client_id: &quot;root&quot;,
+                    client_secret: &quot;root&quot;,
                 },
             },
         },
     })
     @ApiResponse({
         status: 200,
-        description: &#x27;OAuth2 token response&#x27;,
+        description: &quot;OAuth2 token response&quot;,
         type: TokenResponse,
-        example: {
-            access_token: &#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&#x27;,
-            token_type: &#x27;Bearer&#x27;,
-            expires_in: 86400,
+        examples: {
+            success: {
+                summary: &quot;Successful response&quot;,
+                value: {
+                    access_token: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;,
+                    token_type: &quot;Bearer&quot;,
+                    expires_in: 86400,
+                },
+            },
         },
     })
     @ApiResponse({
         status: 401,
-        description: &#x27;Invalid client credentials&#x27;,
+        description: &quot;Invalid client credentials&quot;,
     })
-    async getOAuth2Token(
+    getOAuth2Token(
         @Body() body: any,
         @Headers() headers: any,
     ): Promise&lt;TokenResponse&gt; {
-        if (this.jwtService.isUsingExternalOIDC()) {
-            throw new UnauthorizedException(
-                &#x27;OAuth2 token endpoint is not available when using external OIDC provider. Use your external OIDC provider for authentication.&#x27;,
-            );
-        }
+        return this.authService.getOAuth2Token(body, headers);
+    }
 
-        // Only support client credentials flow
-        if (body.grant_type !&#x3D;&#x3D; &#x27;client_credentials&#x27;) {
-            throw new UnauthorizedException(
-                &#x27;Only client_credentials grant type is supported&#x27;,
-            );
-        }
+    /**
+     * OIDC Discovery endpoint for client credentials flow.
+     * This endpoint provides the OpenID Connect configuration for applications
+     * that need to authenticate using client_id and client_secret.
+     */
+    @Get(&quot;.well-known/oauth-authorization-server&quot;)
+    @ApiOperation({
+        summary: &quot;OIDC Discovery Configuration&quot;,
+        description:
+            &quot;Returns the OpenID Connect discovery configuration for client credentials authentication.&quot;,
+    })
+    @ApiResponse({
+        status: 200,
+        description: &quot;OIDC Discovery Configuration&quot;,
+    })
+    getOidcDiscovery(): OidcDiscoveryDto {
+        return this.authService.getOidcDiscovery();
+    }
 
-        let clientId: string;
-        let clientSecret: string;
-
-        // Try to extract credentials from Authorization header (Basic auth)
-        const authHeader &#x3D; headers.authorization;
-        if (authHeader &amp;&amp; authHeader.startsWith(&#x27;Basic &#x27;)) {
-            try {
-                const base64Credentials &#x3D; authHeader.substring(6);
-                const credentials &#x3D; Buffer.from(
-                    base64Credentials,
-                    &#x27;base64&#x27;,
-                ).toString(&#x27;ascii&#x27;);
-                const [id, secret] &#x3D; credentials.split(&#x27;:&#x27;);
-                clientId &#x3D; id;
-                clientSecret &#x3D; secret;
-            } catch {
-                throw new UnauthorizedException(
-                    &#x27;Invalid Authorization header format&#x27;,
-                );
-            }
-        } else {
-            // Fall back to request body
-            clientId &#x3D; body.client_id;
-            clientSecret &#x3D; body.client_secret;
-        }
-
-        if (!clientId || !clientSecret) {
-            throw new UnauthorizedException(
-                &#x27;Client credentials must be provided either in Authorization header (Basic auth) or request body&#x27;,
-            );
-        }
-
-        const client &#x3D; this.clientService.validateClient(
-            clientId,
-            clientSecret,
-        );
-        if (!client) {
-            throw new UnauthorizedException(&#x27;Invalid client credentials&#x27;);
-        }
-
-        const payload: TokenPayload &#x3D; {
-            sub: client.id,
-        };
-
-        const token &#x3D; await this.jwtService.generateToken(payload, {
-            expiresIn: &#x27;24h&#x27;,
-            audience: &#x27;eudiplo-service&#x27;,
-        });
-
+    /**
+     * Global JWKS endpoint for client credentials flow.
+     * This provides the JSON Web Key Set for verifying tokens issued by this server.
+     */
+    @Get(&quot;.well-known/jwks.json&quot;)
+    @ApiOperation({
+        summary: &quot;JSON Web Key Set&quot;,
+        description: &quot;Returns the JSON Web Key Set for token verification.&quot;,
+    })
+    @ApiResponse({
+        status: 200,
+        description: &quot;JSON Web Key Set&quot;,
+    })
+    getGlobalJwks(): KeyResponseDto {
+        // For now, return an empty key set since the actual keys are tenant-specific
+        // This can be enhanced later to include global signing keys if needed
         return {
-            access_token: token,
-            token_type: &#x27;Bearer&#x27;,
-            expires_in: 86400, // 24 hours in seconds
+            keys: [],
         };
     }
 }

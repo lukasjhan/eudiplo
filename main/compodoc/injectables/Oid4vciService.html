@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -116,10 +134,17 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/issuer/oid4vci/oid4vci.service.ts</code>
+            <code>src/issuer/issuance/oid4vci/oid4vci.service.ts</code>
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service for handling OID4VCI (OpenID 4 Verifiable Credential Issuance) operations.</p>
+
+            </p>
 
 
 
@@ -140,13 +165,6 @@
                                     <span class="modifier">Readonly</span>
                                 <a href="#credentialsService" >credentialsService</a>
                             </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#issuer" >issuer</a>
-                            </li>
-                            <li>
-                                <a href="#resourceServer" >resourceServer</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -160,12 +178,45 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#cleanupExpiredDeferredTransactions" >cleanupExpiredDeferredTransactions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#completeDeferredTransaction" >completeDeferredTransaction</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#createOffer" >createOffer</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#failDeferredTransaction" >failDeferredTransaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAuthorizationServer" >getAuthorizationServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#getCredential" >getCredential</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDeferredCredential" >getDeferredCredential</a>
+                            </li>
+                            <li>
+                                <a href="#getIssuer" >getIssuer</a>
+                            </li>
+                            <li>
+                                <a href="#getResourceServer" >getResourceServer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleDeferredIssuance" >handleDeferredIssuance</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -176,7 +227,12 @@
                                 <a href="#issuerMetadata" >issuerMetadata</a>
                             </li>
                             <li>
-                                <a href="#onModuleInit" >onModuleInit</a>
+                                    <span class="modifier"></span>
+                                <a href="#nonceCleanup" >nonceCleanup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#nonceRequest" >nonceRequest</a>
                             </li>
                         </ul>
                     </td>
@@ -196,12 +252,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(authzService: <a href="../injectables/AuthorizeService.html" target="_self">AuthorizeService</a>, cryptoService: <a href="../injectables/CryptoService.html" target="_self">CryptoService</a>, credentialsService: <a href="../injectables/CredentialsService.html" target="_self">CredentialsService</a>, configService: ConfigService, sessionService: <a href="../injectables/SessionService.html" target="_self">SessionService</a>, sessionLogger: <a href="../injectables/SessionLoggerService.html" target="_self">SessionLoggerService</a>, issuanceService: <a href="../injectables/IssuanceService.html" target="_self">IssuanceService</a>, webhookService: <a href="../injectables/WebhookService.html" target="_self">WebhookService</a>)</code>
+<code>constructor(authzService: <a href="../injectables/AuthorizeService.html" target="_self">AuthorizeService</a>, cryptoService: <a href="../injectables/CryptoService.html" target="_self">CryptoService</a>, credentialsService: <a href="../injectables/CredentialsService.html" target="_self">CredentialsService</a>, configService: ConfigService, sessionService: <a href="../injectables/SessionService.html" target="_self">SessionService</a>, sessionLogger: <a href="../injectables/SessionLoggerService.html" target="_self">SessionLoggerService</a>, issuanceService: <a href="../injectables/IssuanceService.html" target="_self">IssuanceService</a>, webhookService: <a href="../injectables/WebhookService.html" target="_self">WebhookService</a>, httpService: HttpService, statusListConfigService: <a href="../injectables/StatusListConfigService.html" target="_self">StatusListConfigService</a>, chainedAsService: <a href="../injectables/ChainedAsService.html" target="_self">ChainedAsService</a>, nonceRepository: <a href="../entitys/NonceEntity.html" target="_self">Repository&lt;NonceEntity&gt;</a>, deferredTransactionRepository: <a href="../entitys/DeferredTransactionEntity.html" target="_self">Repository&lt;DeferredTransactionEntity&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:42</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -314,6 +370,66 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>httpService</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>statusListConfigService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StatusListConfigService.html" target="_self" >StatusListConfigService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>chainedAsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChainedAsService.html" target="_self" >ChainedAsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>nonceRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/NonceEntity.html" target="_self" >Repository&lt;NonceEntity&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>deferredTransactionRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/DeferredTransactionEntity.html" target="_self" >Repository&lt;DeferredTransactionEntity&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -328,6 +444,165 @@
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cleanupExpiredDeferredTransactions"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>cleanupExpiredDeferredTransactions</b></span>
+                        <a href="#cleanupExpiredDeferredTransactions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cleanupExpiredDeferredTransactions()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Cron(CronExpression.EVERY_HOUR)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="1172"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:1172</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cleanup expired deferred transactions.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="completeDeferredTransaction"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>completeDeferredTransaction</b></span>
+                        <a href="#completeDeferredTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>completeDeferredTransaction(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, transactionId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, claims: Record<string | unknown>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="1084"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:1084</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Mark a deferred transaction as ready with the issued credential.
+This method is called when the external system completes processing.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The tenant ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>transactionId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The transaction ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>claims</td>
+                                            <td>
+                                                        <code>Record&lt;string | unknown&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The claims to include in the credential</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../entitys/DeferredTransactionEntity.html" target="_self" >Promise&lt;DeferredTransactionEntity | null&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The updated deferred transaction</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -350,14 +625,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="115"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:115</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="246"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:246</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Create a credential offer for a specific user and tenant.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -368,6 +645,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -382,6 +660,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>The request body containing the offer details.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>user</td>
@@ -394,7 +676,198 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>The user for whom the offer is being created.</p>
+
+                                            </td>
                                         </tr>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The ID of the tenant.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/OfferResponse.html" target="_self" >Promise&lt;OfferResponse&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The created credential offer.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="failDeferredTransaction"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>failDeferredTransaction</b></span>
+                        <a href="#failDeferredTransaction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>failDeferredTransaction(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, transactionId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, errorMessage?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="1138"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:1138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Mark a deferred transaction as failed.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The tenant ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>transactionId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The transaction ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>errorMessage</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Optional error message</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../entitys/DeferredTransactionEntity.html" target="_self" >Promise&lt;DeferredTransactionEntity | null&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The updated deferred transaction</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAuthorizationServer"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>getAuthorizationServer</b></span>
+                        <a href="#getAuthorizationServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAuthorizationServer(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the authorization server URL for credential offers.
+Uses Chained AS if configured, otherwise falls back to the default AS.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <tr>
                                                 <td>tenantId</td>
                                             <td>
@@ -411,7 +884,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../classes/OfferResponse.html" target="_self" >Promise&lt;OfferResponse&gt;</a></code>
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -443,14 +916,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="180"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:180</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="375"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:375</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Get a credential for a specific session.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -506,6 +981,409 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getDeferredCredential"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getDeferredCredential</b></span>
+                        <a href="#getDeferredCredential"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDeferredCredential(req: Request, body: <a href="../classes/DeferredCredentialRequestDto.html" target="_self">DeferredCredentialRequestDto</a>, tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="932"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:932</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle deferred credential request.
+Called when wallet polls with transaction_id.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>req</td>
+                                            <td>
+                                                        <code>Request</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The request</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>body</td>
+                                            <td>
+                                                            <code><a href="../classes/DeferredCredentialRequestDto.html" target="_self" >DeferredCredentialRequestDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The deferred credential request DTO</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The tenant ID</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;CredentialResponse&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Credential response or issuance_pending error</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getIssuer"></a>
+                    <span class="name">
+                        <span ><b>getIssuer</b></span>
+                        <a href="#getIssuer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getIssuer(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the OID4VCI issuer instance for a specific tenant.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The ID of the tenant.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The OID4VCI issuer instance.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getResourceServer"></a>
+                    <span class="name">
+                        <span ><b>getResourceServer</b></span>
+                        <a href="#getResourceServer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getResourceServer(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get the OID4VCI resource server instance for a specific tenant.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The ID of the tenant.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The OID4VCI resource server instance.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleDeferredIssuance"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>handleDeferredIssuance</b></span>
+                        <a href="#handleDeferredIssuance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleDeferredIssuance(parsedCredentialRequest: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, session: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, claimsResult: <a href="../interfaces/ClaimsWebhookResult.html" target="_self">ClaimsWebhookResult</a>, logContext: <a href="../interfaces/SessionLogContext.html" target="_self">SessionLogContext</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="843"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:843</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle deferred credential issuance.
+Creates a deferred transaction and returns HTTP 202 with transaction_id.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>parsedCredentialRequest</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The parsed credential request</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>session</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The session</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The tenant ID</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>claimsResult</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ClaimsWebhookResult.html" target="_self" >ClaimsWebhookResult</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The claims webhook result indicating deferral</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>logContext</td>
+                                            <td>
+                                                            <code><a href="../interfaces/SessionLogContext.html" target="_self" >SessionLogContext</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The logging context</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A deferred credential response</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="handleNotification"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -524,8 +1402,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="297"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:297</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="735"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:735</a></div>
                         </td>
                     </tr>
 
@@ -612,21 +1490,155 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>issuerMetadata(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>issuerMetadata(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, issuer?: Openid4vciIssuer)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="65"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:65</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:139</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Get the OID4VCI issuer metadata for a specific session.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>tenantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>issuer</td>
+                                            <td>
+                                                        <code>Openid4vciIssuer</code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/IssuerMetadata.html" target="_self" >Promise&lt;IssuerMetadataResult&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The OID4VCI issuer metadata.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nonceCleanup"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>nonceCleanup</b></span>
+                        <a href="#nonceCleanup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nonceCleanup()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Cron(CronExpression.EVERY_10_MINUTES)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="362"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:362</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Cleanup expired nonces from the database.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nonceRequest"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>nonceRequest</b></span>
+                        <a href="#nonceRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nonceRequest(tenantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="348"
+                                    class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:348</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Create a nonce an store it in the session entity</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -656,49 +1668,12 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../interfaces/IssuerMetadata.html" target="_self" >Promise&lt;IssuerMetadataResult&gt;</a></code>
+                            <b>Returns : </b>    <code>unknown</code>
 
                         </div>
                             <div class="io-description">
                                 
                             </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="onModuleInit"></a>
-                    <span class="name">
-                        <span ><b>onModuleInit</b></span>
-                        <a href="#onModuleInit"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>onModuleInit()</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:54</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
                 </td>
             </tr>
         </tbody>
@@ -730,60 +1705,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:47</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="issuer"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>issuer</b></span>
-                        <a href="#issuer"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>Openid4vciIssuer</code>
-
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:40</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="resourceServer"></a>
-                    <span class="name">
-                        <span ><b>resourceServer</b></span>
-                        <a href="#resourceServer"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>Oauth2ResourceServer</code>
-
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/issuer/oid4vci/oid4vci.service.ts:42</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/issuer/issuance/oid4vci/oid4vci.service.ts:78</a></div>
                         </td>
                     </tr>
 
@@ -796,49 +1718,80 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpService } from &quot;@nestjs/axios&quot;;
+import {
     BadRequestException,
     ConflictException,
     Injectable,
-    OnModuleInit,
-} from &#x27;@nestjs/common&#x27;;
-import { ConfigService } from &#x27;@nestjs/config&#x27;;
+} from &quot;@nestjs/common&quot;;
+import { ConfigService } from &quot;@nestjs/config&quot;;
+import { Cron, CronExpression } from &quot;@nestjs/schedule&quot;;
+import { InjectRepository } from &quot;@nestjs/typeorm&quot;;
 import {
-    type HttpMethod,
-    Oauth2ResourceServer,
-    SupportedAuthenticationScheme,
+    AuthorizationServerMetadata,
     authorizationCodeGrantIdentifier,
+    type HttpMethod,
+    type Jwk,
+    Oauth2ResourceServer,
     preAuthorizedCodeGrantIdentifier,
-} from &#x27;@openid4vc/oauth2&#x27;;
+    SupportedAuthenticationScheme,
+} from &quot;@openid4vc/oauth2&quot;;
 import {
+    CredentialOfferAuthorizationCodeGrant,
+    CredentialOfferPreAuthorizedCodeGrant,
     type CredentialResponse,
     type IssuerMetadataResult,
-    Openid4vciDraftVersion,
     Openid4vciIssuer,
-} from &#x27;@openid4vc/openid4vci&#x27;;
-import type { Request } from &#x27;express&#x27;;
-import { CredentialsService } from &#x27;../credentials/credentials.service&#x27;;
-import { CryptoService } from &#x27;../../crypto/crypto.service&#x27;;
-import { AuthorizeService } from &#x27;../authorize/authorize.service&#x27;;
-import { getHeadersFromRequest } from &#x27;./util&#x27;;
-import { readFileSync } from &#x27;node:fs&#x27;;
-import { join } from &#x27;node:path&#x27;;
-import { SessionService } from &#x27;../../session/session.service&#x27;;
-import { v4 } from &#x27;uuid&#x27;;
-import { OfferRequestDto, OfferResponse } from &#x27;./dto/offer-request.dto&#x27;;
-import { NotificationRequestDto } from &#x27;./dto/notification-request.dto&#x27;;
-import { SessionLoggerService } from &#x27;../../utils/logger/session-logger.service&#x27;;
-import { SessionLogContext } from &#x27;../../utils/logger/session-logger-context&#x27;;
-import { TokenPayload } from &#x27;../../auth/token.decorator&#x27;;
-import { IssuanceService } from &#x27;../issuance/issuance.service&#x27;;
-import { WebhookService } from &#x27;../../utils/webhook/webhook.service&#x27;;
+    Openid4vciVersion,
+    ParseCredentialRequestReturn,
+} from &quot;@openid4vc/openid4vci&quot;;
+import type { Request } from &quot;express&quot;;
+import { decodeJwt } from &quot;jose&quot;;
+import { firstValueFrom } from &quot;rxjs&quot;;
+import { LessThan, Repository } from &quot;typeorm&quot;;
+import { v4 } from &quot;uuid&quot;;
+import { TokenPayload } from &quot;../../../auth/token.decorator&quot;;
+import { CryptoService } from &quot;../../../crypto/crypto.service&quot;;
+import {
+    Session,
+    SessionStatus,
+} from &quot;../../../session/entities/session.entity&quot;;
+import { SessionService } from &quot;../../../session/session.service&quot;;
+import { SessionLoggerService } from &quot;../../../shared/utils/logger/session-logger.service&quot;;
+import { SessionLogContext } from &quot;../../../shared/utils/logger/session-logger-context&quot;;
+import { WebhookService } from &quot;../../../shared/utils/webhook/webhook.service&quot;;
+import {
+    AuthorizationIdentity,
+    ClaimsWebhookResult,
+    CredentialsService,
+} from &quot;../../configuration/credentials/credentials.service&quot;;
+import { IssuanceService } from &quot;../../configuration/issuance/issuance.service&quot;;
+import { StatusListConfigService } from &quot;../../lifecycle/status/status-list-config.service&quot;;
+import { AuthorizeService } from &quot;./authorize/authorize.service&quot;;
+import { ChainedAsService } from &quot;./chained-as/chained-as.service&quot;;
+import { DeferredCredentialRequestDto } from &quot;./dto/deferred-credential-request.dto&quot;;
+import { NotificationRequestDto } from &quot;./dto/notification-request.dto&quot;;
+import {
+    FlowType,
+    OfferRequestDto,
+    OfferResponse,
+} from &quot;./dto/offer-request.dto&quot;;
+import {
+    DeferredTransactionEntity,
+    DeferredTransactionStatus,
+} from &quot;./entities/deferred-transaction.entity&quot;;
+import { NonceEntity } from &quot;./entities/nonces.entity&quot;;
+import {
+    CredentialRequestException,
+    DeferredCredentialException,
+} from &quot;./exceptions&quot;;
+import { getHeadersFromRequest } from &quot;./util&quot;;
 
+/**
+ * Service for handling OID4VCI (OpenID 4 Verifiable Credential Issuance) operations.
+ */
 @Injectable()
-export class Oid4vciService implements OnModuleInit {
-    private issuer: Openid4vciIssuer;
-
-    resourceServer: Oauth2ResourceServer;
-
+export class Oid4vciService {
     constructor(
         private readonly authzService: AuthorizeService,
         private readonly cryptoService: CryptoService,
@@ -848,105 +1801,241 @@ export class Oid4vciService implements OnModuleInit {
         private readonly sessionLogger: SessionLoggerService,
         private readonly issuanceService: IssuanceService,
         private readonly webhookService: WebhookService,
+        private readonly httpService: HttpService,
+        private readonly statusListConfigService: StatusListConfigService,
+        private readonly chainedAsService: ChainedAsService,
+        @InjectRepository(NonceEntity)
+        private readonly nonceRepository: Repository&lt;NonceEntity&gt;,
+        @InjectRepository(DeferredTransactionEntity)
+        private readonly deferredTransactionRepository: Repository&lt;DeferredTransactionEntity&gt;,
     ) {}
-    onModuleInit() {
-        //TODO: align for tenant
-        const callbacks &#x3D; this.cryptoService.getCallbackContext(&#x27;&#x27;);
-        this.issuer &#x3D; new Openid4vciIssuer({
-            callbacks,
-        });
-        this.resourceServer &#x3D; new Oauth2ResourceServer({
+
+    /**
+     * Get the authorization server URL for credential offers.
+     * Uses Chained AS if configured, otherwise falls back to the default AS.
+     */
+    private async getAuthorizationServer(tenantId: string): Promise&lt;string&gt; {
+        const issuanceConfig &#x3D;
+            await this.issuanceService.getIssuanceConfiguration(tenantId);
+
+        if (issuanceConfig.chainedAs?.enabled) {
+            const publicUrl &#x3D;
+                this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;);
+            return &#x60;${publicUrl}/${tenantId}/chained-as&#x60;;
+        }
+
+        return this.authzService.getAuthzIssuer(tenantId);
+    }
+
+    /**
+     * Get the OID4VCI issuer instance for a specific tenant.
+     * @param tenantId The ID of the tenant.
+     * @returns The OID4VCI issuer instance.
+     */
+    getIssuer(tenantId: string) {
+        const callbacks &#x3D; this.cryptoService.getCallbackContext(tenantId);
+        return new Openid4vciIssuer({
             callbacks,
         });
     }
 
-    async issuerMetadata(tenantId: string): Promise&lt;IssuerMetadataResult&gt; {
-        const credential_issuer &#x3D; &#x60;${this.configService.getOrThrow&lt;string&gt;(
-            &#x27;PUBLIC_URL&#x27;,
-        )}/${tenantId}&#x60;;
+    /**
+     * Get the OID4VCI resource server instance for a specific tenant.
+     * @param tenantId The ID of the tenant.
+     * @returns The OID4VCI resource server instance.
+     */
+    getResourceServer(tenantId: string) {
+        const callbacks &#x3D; this.cryptoService.getCallbackContext(tenantId);
+        return new Oauth2ResourceServer({
+            callbacks,
+        });
+    }
 
-        const display &#x3D; JSON.parse(
-            readFileSync(
-                join(
-                    this.configService.getOrThrow&lt;string&gt;(&#x27;FOLDER&#x27;),
-                    tenantId,
-                    &#x27;display.json&#x27;,
+    /**
+     * Get the OID4VCI issuer metadata for a specific session.
+     * @param session The session for which to retrieve the issuer metadata.
+     * @returns The OID4VCI issuer metadata.
+     */
+    async issuerMetadata(
+        tenantId: string,
+        issuer?: Openid4vciIssuer,
+    ): Promise&lt;IssuerMetadataResult&gt; {
+        issuer ??&#x3D; this.getIssuer(tenantId);
+
+        const credential_issuer &#x3D; &#x60;${this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;)}/${tenantId}&#x60;;
+
+        const issuanceConfig &#x3D;
+            await this.issuanceService.getIssuanceConfiguration(tenantId);
+
+        const authorizationServers: AuthorizationServerMetadata[] &#x3D; [];
+        let authServers: string[] &#x3D; [];
+
+        for (const authServerUrl of issuanceConfig.authServers || []) {
+            authServers.push(authServerUrl);
+            //TODO: check where this is needed to reduce calls
+            authorizationServers.push(
+                await firstValueFrom(
+                    this.httpService.get(
+                        &#x60;${authServerUrl}/.well-known/oauth-authorization-server&#x60;,
+                    ),
+                ).then(
+                    (response) &#x3D;&gt; response.data,
+                    async () &#x3D;&gt; {
+                        // Retry fetching from OIDC metadata endpoint
+                        return await firstValueFrom(
+                            this.httpService.get(
+                                &#x60;${authServerUrl}/.well-known/openid-configuration&#x60;,
+                            ),
+                        ).then(
+                            (response) &#x3D;&gt; response.data,
+                            () &#x3D;&gt; {
+                                throw new BadRequestException(
+                                    &quot;Failed to fetch authorization server metadata&quot;,
+                                );
+                            },
+                        );
+                    },
                 ),
-                &#x27;utf-8&#x27;,
-            ),
-        );
+            );
+        }
 
-        const authorizationServerMetadata &#x3D;
-            this.authzService.authzMetadata(tenantId);
+        // Add Chained AS if enabled
+        if (issuanceConfig.chainedAs?.enabled) {
+            const chainedAsIssuer &#x3D; &#x60;${credential_issuer}/chained-as&#x60;;
+            authServers.push(chainedAsIssuer);
+            authorizationServers.push(
+                await firstValueFrom(
+                    this.httpService.get(
+                        &#x60;${chainedAsIssuer}/.well-known/oauth-authorization-server&#x60;,
+                    ),
+                ).then(
+                    (response) &#x3D;&gt; response.data,
+                    () &#x3D;&gt; {
+                        throw new BadRequestException(
+                            &quot;Failed to fetch Chained AS metadata&quot;,
+                        );
+                    },
+                ),
+            );
+        }
 
-        let credentialIssuer &#x3D; this.issuer.createCredentialIssuerMetadata({
+        authServers.push(this.authzService.getAuthzIssuer(tenantId));
+        authorizationServers.push(this.authzService.authzMetadata(tenantId));
+
+        // Check if status list aggregation is enabled for this tenant
+        const statusListConfig &#x3D;
+            await this.statusListConfigService.getEffectiveConfig(tenantId);
+        const statusListAggregationEndpoint &#x3D; statusListConfig.enableAggregation
+            ? &#x60;${credential_issuer}/status-management/status-list-aggregation&#x60;
+            : undefined;
+
+        const credentialIssuer &#x3D; issuer.createCredentialIssuerMetadata({
             credential_issuer,
             credential_configurations_supported:
-                await this.credentialsService.getCredentialConfiguration(
+                await this.credentialsService.getCredentialConfigurationSupported(
                     tenantId,
                 ),
             credential_endpoint: &#x60;${credential_issuer}/vci/credential&#x60;,
-            authorization_servers: [authorizationServerMetadata.issuer],
-            authorization_server: authorizationServerMetadata.issuer,
+            deferred_credential_endpoint: &#x60;${credential_issuer}/vci/deferred_credential&#x60;,
+            authorization_servers: authServers,
             notification_endpoint: &#x60;${credential_issuer}/vci/notification&#x60;,
-            batch_credential_issuance: {
-                batch_size: 1,
-            },
-            display,
+            nonce_endpoint: &#x60;${credential_issuer}/vci/nonce&#x60;,
+            display: issuanceConfig.display as any,
+            batch_credential_issuance:
+                issuanceConfig?.batchSize &amp;&amp; issuanceConfig?.batchSize &gt; 1
+                    ? {
+                          batch_size: issuanceConfig?.batchSize,
+                      }
+                    : undefined,
+            status_list_aggregation_endpoint: statusListAggregationEndpoint,
         });
-
-        //replace placeholders in the issuer metadata
-        credentialIssuer &#x3D; JSON.parse(
-            JSON.stringify(credentialIssuer).replace(
-                /&lt;PUBLIC_URL&gt;/g,
-                this.configService.getOrThrow&lt;string&gt;(&#x27;PUBLIC_URL&#x27;),
-            ),
-        );
-
         return {
             credentialIssuer,
-            authorizationServers: [authorizationServerMetadata],
-            originalDraftVersion: Openid4vciDraftVersion.Draft14,
-        } as const satisfies IssuerMetadataResult;
+            authorizationServers,
+            originalDraftVersion: Openid4vciVersion.V1,
+        } as IssuerMetadataResult;
     }
 
+    /**
+     * Create a credential offer for a specific user and tenant.
+     * @param body The request body containing the offer details.
+     * @param user The user for whom the offer is being created.
+     * @param tenantId The ID of the tenant.
+     * @returns The created credential offer.
+     */
     async createOffer(
         body: OfferRequestDto,
         user: TokenPayload,
         tenantId: string,
     ): Promise&lt;OfferResponse&gt; {
-        const issuanceConfig &#x3D; await this.issuanceService
-            .getIssuanceConfigurationById(body.issuanceId, tenantId)
-            .catch(() &#x3D;&gt; {
-                throw new BadRequestException(
-                    &#x60;Issuance configuration with ID ${body.issuanceId} not found&#x60;,
-                );
-            });
-        const credentialConfigurationIds &#x3D;
-            body.credentialConfigurationIds ||
-            issuanceConfig.credentialConfigs.map((config) &#x3D;&gt; config.id);
+        const credentialConfigurationIds &#x3D; body.credentialConfigurationIds;
 
         let authorization_code: string | undefined;
         let grants: any;
         const issuer_state &#x3D; v4();
-        if (issuanceConfig.authenticationConfig.method &#x3D;&#x3D;&#x3D; &#x27;none&#x27;) {
+        if (body.flow &#x3D;&#x3D;&#x3D; FlowType.PRE_AUTH_CODE) {
+            //check if tx_code is a number
             authorization_code &#x3D; v4();
             grants &#x3D; {
                 [preAuthorizedCodeGrantIdentifier]: {
-                    &#x27;pre-authorized_code&#x27;: authorization_code,
-                },
+                    &quot;pre-authorized_code&quot;: authorization_code,
+                    tx_code: body.tx_code
+                        ? {
+                              input_mode: Number(body.tx_code)
+                                  ? &quot;numeric&quot;
+                                  : &quot;text&quot;,
+                              length: body.tx_code.length,
+                              description: body.tx_code_description,
+                          }
+                        : undefined,
+                    // Pre-authorized code flow always uses the built-in AS
+                    // since the pre-authorized code is generated by the issuer
+                    authorization_server:
+                        this.authzService.getAuthzIssuer(tenantId),
+                } as CredentialOfferPreAuthorizedCodeGrant,
             };
         } else {
+            // For authorization code flow, use Chained AS if configured
+            const authServer &#x3D;
+                body.authorization_server ??
+                (await this.getAuthorizationServer(tenantId));
             grants &#x3D; {
                 [authorizationCodeGrantIdentifier]: {
                     issuer_state,
-                },
+                    authorization_server: authServer,
+                } as CredentialOfferAuthorizationCodeGrant,
             };
         }
 
-        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId);
+        //if claims are provided, check them against the schemas when provided
+        if (body.credentialClaims) {
+            Promise.all(
+                Object.entries(body.credentialClaims).map(
+                    ([credentialConfigId, claimSource]) &#x3D;&gt; {
+                        if (claimSource.type &#x3D;&#x3D;&#x3D; &quot;inline&quot;) {
+                            return this.credentialsService.validateClaimsForCredential(
+                                credentialConfigId,
+                                claimSource.claims,
+                            );
+                        }
+                        return Promise.resolve();
+                    },
+                ),
+            );
+        }
 
-        return this.issuer
+        const session &#x3D; await this.sessionService.create({
+            id: issuer_state,
+            credentialPayload: body,
+            tenantId: user.entity!.id,
+            authorization_code,
+            notifyWebhook: body.notifyWebhook,
+        });
+
+        const issuer &#x3D; this.getIssuer(session.tenantId);
+        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId, issuer);
+
+        return issuer
             .createCredentialOffer({
                 credentialConfigurationIds,
                 grants,
@@ -954,16 +2043,12 @@ export class Oid4vciService implements OnModuleInit {
             })
             .then(
                 async (offer) &#x3D;&gt; {
-                    await this.sessionService.create({
-                        id: issuer_state,
-                        offer: offer.credentialOfferObject,
-                        credentialPayload: body,
-                        tenantId: user.sub,
-                        issuanceId: body.issuanceId,
-                        authorization_code,
+                    await this.sessionService.add(issuer_state, {
+                        offer: offer.credentialOfferObject as any,
+                        offerUrl: offer.credentialOffer,
                     });
                     return {
-                        session: issuer_state,
+                        session: session.id,
                         uri: offer.credentialOffer,
                     } as OfferResponse;
                 },
@@ -975,66 +2060,301 @@ export class Oid4vciService implements OnModuleInit {
             );
     }
 
+    /**
+     * Create a nonce an store it in the session entity
+     * @param session
+     * @returns
+     */
+    async nonceRequest(tenantId: string) {
+        const nonce &#x3D; v4();
+        await this.nonceRepository.save({
+            nonce,
+            tenantId,
+            expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+        });
+        return nonce;
+    }
+
+    /**
+     * Cleanup expired nonces from the database.
+     */
+    @Cron(CronExpression.EVERY_10_MINUTES)
+    nonceCleanup() {
+        const now &#x3D; new Date();
+        this.nonceRepository.delete({
+            expiresAt: LessThan(now),
+        });
+    }
+
+    /**
+     * Get a credential for a specific session.
+     * @param req
+     * @param session
+     * @returns
+     */
     async getCredential(
         req: Request,
         tenantId: string,
     ): Promise&lt;CredentialResponse&gt; {
-        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId);
-        const parsedCredentialRequest &#x3D; this.issuer.parseCredentialRequest({
-            issuerMetadata,
-            credentialRequest: req.body as Record&lt;string, unknown&gt;,
-        });
+        const issuer &#x3D; this.getIssuer(tenantId);
+        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId, issuer);
+        const resourceServer &#x3D; this.getResourceServer(tenantId);
+        const issuanceConfig &#x3D;
+            await this.issuanceService.getIssuanceConfiguration(tenantId);
 
-        if (parsedCredentialRequest?.proofs?.jwt &#x3D;&#x3D;&#x3D; undefined) {
-            throw new Error(&#x27;Invalid credential request&#x27;);
+        let parsedCredentialRequest: ParseCredentialRequestReturn;
+        const known &#x3D; issuer.getKnownCredentialConfigurationsSupported(
+            issuerMetadata.credentialIssuer,
+        );
+        issuerMetadata.knownCredentialConfigurations &#x3D; known;
+        try {
+            parsedCredentialRequest &#x3D; issuer.parseCredentialRequest({
+                issuerMetadata,
+                credentialRequest: req.body as Record&lt;string, unknown&gt;,
+            });
+        } catch (err) {
+            // OID4VCI spec Section 8.3.1.2: invalid_credential_request
+            throw new CredentialRequestException(
+                &quot;invalid_credential_request&quot;,
+                err instanceof Error
+                    ? err.message
+                    : &quot;The Credential Request is malformed or missing required parameters&quot;,
+            );
         }
 
-        const protocol &#x3D; new URL(
-            this.configService.getOrThrow&lt;string&gt;(&#x27;PUBLIC_URL&#x27;),
-        ).protocol;
+        if (parsedCredentialRequest?.proofs?.jwt &#x3D;&#x3D;&#x3D; undefined) {
+            // OID4VCI spec Section 8.3.1.2: invalid_proof
+            throw new CredentialRequestException(
+                &quot;invalid_proof&quot;,
+                &quot;The proofs parameter is missing or does not contain required JWT proofs&quot;,
+            );
+        }
 
         const headers &#x3D; getHeadersFromRequest(req);
-        const { tokenPayload } &#x3D;
-            await this.resourceServer.verifyResourceRequest({
-                authorizationServers: issuerMetadata.authorizationServers,
-                request: {
-                    url: &#x60;${protocol}//${req.host}${req.url}&#x60;,
-                    method: req.method as HttpMethod,
-                    headers,
-                },
-                resourceServer:
-                    issuerMetadata.credentialIssuer.credential_issuer,
-                allowedAuthenticationSchemes: [
-                    SupportedAuthenticationScheme.DPoP,
-                ],
+
+        const allowedAuthenticationSchemes &#x3D; [
+            SupportedAuthenticationScheme.DPoP,
+        ];
+
+        if (!issuanceConfig.dPopRequired) {
+            allowedAuthenticationSchemes.push(
+                SupportedAuthenticationScheme.Bearer,
+            );
+        }
+        const { tokenPayload } &#x3D; await resourceServer.verifyResourceRequest({
+            authorizationServers: issuerMetadata.authorizationServers,
+            request: {
+                url: &#x60;${this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;)}${req.url}&#x60;,
+                method: req.method as HttpMethod,
+                headers,
+            },
+            resourceServer: issuerMetadata.credentialIssuer.credential_issuer,
+            allowedAuthenticationSchemes,
+        });
+
+        // Determine the token source: local AS, Chained AS, or external AS
+        const localIssuer &#x3D; this.authzService.getAuthzIssuer(tenantId);
+        const publicUrl &#x3D; this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;);
+        const chainedAsIssuer &#x3D; &#x60;${publicUrl}/${tenantId}/chained-as&#x60;;
+
+        const isLocalAsToken &#x3D; tokenPayload.iss &#x3D;&#x3D;&#x3D; localIssuer;
+        const isChainedAsToken &#x3D; tokenPayload.iss &#x3D;&#x3D;&#x3D; chainedAsIssuer;
+        const isExternalAsToken &#x3D; !isLocalAsToken &amp;&amp; !isChainedAsToken;
+
+        let session: Session;
+        let claimsResult: ClaimsWebhookResult | undefined;
+
+        if (isChainedAsToken) {
+            // Chained AS flow - EUDIPLO-issued token with issuer_state for session correlation
+            const issuerState &#x3D; tokenPayload.issuer_state as string | undefined;
+            if (!issuerState) {
+                throw new CredentialRequestException(
+                    &quot;credential_request_denied&quot;,
+                    &quot;Chained AS token is missing issuer_state claim&quot;,
+                );
+            }
+
+            // Look up session by issuer_state
+            session &#x3D; await this.sessionService.getBy({ id: issuerState });
+
+            // Get upstream identity claims from the Chained AS session
+            // This includes the full claims from the upstream OIDC provider (e.g., Keycloak)
+            const upstreamIdentity &#x3D;
+                await this.chainedAsService.getUpstreamIdentityByIssuerState(
+                    issuerState,
+                );
+
+            // Use upstream identity if available, fallback to chained AS token claims
+            const identity: AuthorizationIdentity &#x3D; upstreamIdentity ?? {
+                iss: tokenPayload.iss as string,
+                sub:
+                    (tokenPayload.upstream_sub as string) ??
+                    (tokenPayload.sub as string),
+                token_claims: tokenPayload as Record&lt;string, unknown&gt;,
+            };
+
+            claimsResult &#x3D; await this.credentialsService.getClaimsFromWebhook(
+                parsedCredentialRequest.credentialConfigurationId as string,
+                session,
+                { identity },
+            );
+        } else if (isExternalAsToken) {
+            // External AS flow (e.g., Keycloak)
+            // Verify that the token&#x27;s issuer is in the list of configured auth servers
+            const configuredAuthServers &#x3D;
+                issuanceConfig.authServers?.map((url) &#x3D;&gt; url) ?? [];
+            if (!configuredAuthServers.includes(tokenPayload.iss as string)) {
+                throw new CredentialRequestException(
+                    &quot;credential_request_denied&quot;,
+                    &#x60;Token issuer &#x27;${tokenPayload.iss}&#x27; is not a configured authorization server&#x60;,
+                );
+            }
+
+            // Find or create session by external identity
+            session &#x3D; await this.sessionService.findOrCreateByExternalIdentity(
+                tenantId,
+                tokenPayload.iss as string,
+                tokenPayload.sub as string,
+            );
+
+            // For external AS, claims must come from webhook with identity context
+            const identity: AuthorizationIdentity &#x3D; {
+                iss: tokenPayload.iss as string,
+                sub: tokenPayload.sub as string,
+                token_claims: tokenPayload as Record&lt;string, unknown&gt;,
+            };
+
+            claimsResult &#x3D; await this.credentialsService.getClaimsFromWebhook(
+                parsedCredentialRequest.credentialConfigurationId as string,
+                session,
+                { identity, requireWebhook: true },
+            );
+        } else {
+            // Local AS flow - existing behavior
+            session &#x3D; await this.sessionService.getBy({
+                id: tokenPayload.sub,
             });
 
-        const session &#x3D; await this.sessionService.get(
-            tokenPayload.sub as string,
-        );
+            if (tokenPayload.sub !&#x3D;&#x3D; session.id) {
+                // OID4VCI spec Section 8.3.1.2: credential_request_denied
+                throw new CredentialRequestException(
+                    &quot;credential_request_denied&quot;,
+                    &quot;The access token is not associated with a valid session&quot;,
+                );
+            }
+
+            // Get claims from webhook if configured
+            // Pass identity info from internal AS token for consistency
+            const identity: AuthorizationIdentity &#x3D; {
+                iss: tokenPayload.iss as string,
+                sub: String(tokenPayload.sub),
+                token_claims: tokenPayload as Record&lt;string, unknown&gt;,
+            };
+
+            claimsResult &#x3D; await this.credentialsService.getClaimsFromWebhook(
+                parsedCredentialRequest.credentialConfigurationId as string,
+                session,
+                { identity },
+            );
+        }
 
         // Create session logging context
         const logContext: SessionLogContext &#x3D; {
             sessionId: session.id,
             tenantId,
-            flowType: &#x27;OID4VCI&#x27;,
-            stage: &#x27;credential_request&#x27;,
+            flowType: &quot;OID4VCI&quot;,
+            stage: &quot;credential_request&quot;,
         };
 
         this.sessionLogger.logFlowStart(logContext, {
             credentialConfigurationId:
                 parsedCredentialRequest.credentialConfigurationId,
             proofCount: parsedCredentialRequest.proofs?.jwt?.length || 0,
+            isExternalAs: isExternalAsToken,
+            isChainedAs: isChainedAsToken,
         });
 
         try {
-            const credentials: string[] &#x3D; [];
+            const credentials: { credential: string }[] &#x3D; [];
+
+            // Check if the webhook indicated deferred issuance
+            if (claimsResult?.deferred) {
+                return this.handleDeferredIssuance(
+                    parsedCredentialRequest,
+                    session,
+                    tenantId,
+                    claimsResult,
+                    logContext,
+                );
+            }
+
+            // OID4VCI spec Section 8.3.1.2: When the Credential Issuer has a Nonce Endpoint,
+            // all key proofs MUST contain a c_nonce value. If any proof is missing a nonce,
+            // return invalid_proof error.
+            // Section 13.8: A Wallet can continue using a given nonce until it is rejected
+            // by the Credential Issuer. For batch issuance, all proofs typically use the same nonce.
+            const uniqueNonces &#x3D; new Set&lt;string&gt;();
             for (const jwt of parsedCredentialRequest.proofs.jwt) {
+                const payload &#x3D; decodeJwt(jwt);
+                if (!payload.nonce) {
+                    // OID4VCI spec Section 8.3.1.2: invalid_proof
+                    // &quot;if at least one of the key proofs does not contain a c_nonce value&quot;
+                    throw new CredentialRequestException(
+                        &quot;invalid_proof&quot;,
+                        &quot;All key proofs must contain a nonce when the nonce endpoint is offered&quot;,
+                    );
+                }
+                uniqueNonces.add(payload.nonce as string);
+            }
+
+            // Validate and consume all unique nonces upfront
+            for (const nonce of uniqueNonces) {
+                // Find the nonce and verify it hasn&#x27;t expired
+                const nonceEntity &#x3D; await this.nonceRepository.findOne({
+                    where: { nonce, tenantId },
+                });
+
+                if (!nonceEntity) {
+                    // OID4VCI spec Section 8.3.1.2: invalid_nonce
+                    const nonceError &#x3D; new CredentialRequestException(
+                        &quot;invalid_nonce&quot;,
+                        &quot;The nonce in the key proof is invalid or has already been used&quot;,
+                    );
+                    this.sessionLogger.logFlowError(logContext, nonceError, {
+                        credentialConfigurationId:
+                            parsedCredentialRequest.credentialConfigurationId,
+                    });
+                    throw nonceError;
+                }
+
+                if (nonceEntity.expiresAt &lt; new Date()) {
+                    // Nonce exists but has expired - clean it up and reject
+                    await this.nonceRepository.delete({ nonce, tenantId });
+                    const nonceError &#x3D; new CredentialRequestException(
+                        &quot;invalid_nonce&quot;,
+                        &quot;The nonce in the key proof has expired&quot;,
+                    );
+                    this.sessionLogger.logFlowError(logContext, nonceError, {
+                        credentialConfigurationId:
+                            parsedCredentialRequest.credentialConfigurationId,
+                    });
+                    throw nonceError;
+                }
+
+                // Consume the nonce (delete it so it can&#x27;t be reused)
+                await this.nonceRepository.delete({ nonce, tenantId });
+            }
+
+            for (const jwt of parsedCredentialRequest.proofs.jwt) {
+                const payload &#x3D; decodeJwt(jwt);
+                const expectedNonce &#x3D; payload.nonce! as string;
+
                 const verifiedProof &#x3D;
-                    await this.issuer.verifyCredentialRequestJwtProof({
-                        //check if this is correct or if the passed nonce is validated.
-                        expectedNonce: tokenPayload.nonce as string,
-                        issuerMetadata: await this.issuerMetadata(tenantId),
+                    await issuer.verifyCredentialRequestJwtProof({
+                        expectedNonce,
+                        issuerMetadata: await this.issuerMetadata(
+                            session.tenantId,
+                        ),
                         jwt,
                     });
                 const cnf &#x3D; verifiedProof.signer.publicJwk;
@@ -1042,8 +2362,11 @@ export class Oid4vciService implements OnModuleInit {
                     parsedCredentialRequest.credentialConfigurationId as string,
                     cnf as any,
                     session,
+                    claimsResult?.claims,
                 );
-                credentials.push(cred);
+                credentials.push({
+                    credential: cred,
+                });
 
                 this.sessionLogger.logCredentialIssuance(
                     logContext,
@@ -1061,8 +2384,9 @@ export class Oid4vciService implements OnModuleInit {
                 credentialConfigurationId:
                     parsedCredentialRequest.credentialConfigurationId as string,
             });
-            await this.sessionService.add(session.id, tenantId, {
+            await this.sessionService.add(session.id, {
                 notifications: session.notifications,
+                status: SessionStatus.Fetched,
             });
 
             this.sessionLogger.logFlowComplete(logContext, {
@@ -1070,11 +2394,10 @@ export class Oid4vciService implements OnModuleInit {
                 notificationId,
             });
 
-            return this.issuer.createCredentialResponse({
+            return issuer.createCredentialResponse({
                 credentials,
                 credentialRequest: parsedCredentialRequest,
                 cNonce: tokenPayload.nonce as string,
-                cNonceExpiresInSeconds: 3600,
                 //this should be stored in the session in case this endpoint is requested multiple times, but the response is differnt.
                 notificationId,
             });
@@ -1083,7 +2406,44 @@ export class Oid4vciService implements OnModuleInit {
                 credentialConfigurationId:
                     parsedCredentialRequest.credentialConfigurationId,
             });
-            throw error;
+
+            // If it&#x27;s already a CredentialRequestException, re-throw it
+            if (error instanceof CredentialRequestException) {
+                throw error;
+            }
+
+            // Check for credential configuration not found
+            if (
+                error instanceof ConflictException &amp;&amp;
+                (error.message?.includes(&quot;not found&quot;) ||
+                    error.message?.includes(&quot;Credential configuration&quot;))
+            ) {
+                throw new CredentialRequestException(
+                    &quot;unknown_credential_configuration&quot;,
+                    error.message,
+                );
+            }
+
+            // Check for proof verification errors
+            if (
+                error instanceof Error &amp;&amp;
+                (error.message?.toLowerCase().includes(&quot;proof&quot;) ||
+                    error.message?.toLowerCase().includes(&quot;signature&quot;) ||
+                    error.message?.toLowerCase().includes(&quot;jwt&quot;))
+            ) {
+                throw new CredentialRequestException(
+                    &quot;invalid_proof&quot;,
+                    error.message,
+                );
+            }
+
+            // Default: credential_request_denied for unrecoverable errors
+            throw new CredentialRequestException(
+                &quot;credential_request_denied&quot;,
+                error instanceof Error
+                    ? error.message
+                    : &quot;An unexpected error occurred&quot;,
+            );
         }
     }
 
@@ -1097,39 +2457,50 @@ export class Oid4vciService implements OnModuleInit {
         body: NotificationRequestDto,
         tenantId: string,
     ) {
-        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId);
+        const issuer &#x3D; this.getIssuer(tenantId);
+        const resourceServer &#x3D; this.getResourceServer(tenantId);
+        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId, issuer);
+        const issuanceConfig &#x3D;
+            await this.issuanceService.getIssuanceConfiguration(tenantId);
         const headers &#x3D; getHeadersFromRequest(req);
         const protocol &#x3D; new URL(
-            this.configService.getOrThrow&lt;string&gt;(&#x27;PUBLIC_URL&#x27;),
+            this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;),
         ).protocol;
-        const { tokenPayload } &#x3D;
-            await this.resourceServer.verifyResourceRequest({
-                authorizationServers: issuerMetadata.authorizationServers,
-                request: {
-                    url: &#x60;${protocol}//${req.host}${req.url}&#x60;,
-                    method: req.method as HttpMethod,
-                    headers,
-                },
-                resourceServer:
-                    issuerMetadata.credentialIssuer.credential_issuer,
-                allowedAuthenticationSchemes: [
-                    SupportedAuthenticationScheme.DPoP,
-                ],
-            });
 
-        const session &#x3D; await this.sessionService.get(
-            tokenPayload.sub as string,
-        );
-        if (session &#x3D;&#x3D;&#x3D; undefined) {
-            throw new BadRequestException(&#x27;Session not found&#x27;);
+        const allowedAuthenticationSchemes: SupportedAuthenticationScheme[] &#x3D; [
+            SupportedAuthenticationScheme.DPoP,
+        ];
+        if (!issuanceConfig.dPopRequired) {
+            allowedAuthenticationSchemes.push(
+                SupportedAuthenticationScheme.Bearer,
+            );
+        }
+
+        const { tokenPayload } &#x3D; await resourceServer.verifyResourceRequest({
+            authorizationServers: issuerMetadata.authorizationServers,
+            request: {
+                url: &#x60;${this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;)}${req.url}&#x60;,
+                method: req.method as HttpMethod,
+                headers,
+            },
+            resourceServer: issuerMetadata.credentialIssuer.credential_issuer,
+            allowedAuthenticationSchemes,
+        });
+
+        const session &#x3D; await this.sessionService.getBy({
+            id: tokenPayload.sub,
+        });
+
+        if (session.id !&#x3D;&#x3D; tokenPayload.sub) {
+            throw new BadRequestException(&quot;Session not found&quot;);
         }
 
         // Create session logging context
         const logContext: SessionLogContext &#x3D; {
             sessionId: session.id,
             tenantId,
-            flowType: &#x27;OID4VCI&#x27;,
-            stage: &#x27;notification&#x27;,
+            flowType: &quot;OID4VCI&quot;,
+            stage: &quot;notification&quot;,
         };
 
         try {
@@ -1138,16 +2509,16 @@ export class Oid4vciService implements OnModuleInit {
             );
             if (index &#x3D;&#x3D;&#x3D; -1) {
                 throw new BadRequestException(
-                    &#x27;No notifications found in session&#x27;,
+                    &quot;No notifications found in session&quot;,
                 );
             }
 
             session.notifications[index].event &#x3D; body.event;
-            await this.sessionService.add(session.id, tenantId, {
+            await this.sessionService.add(session.id, {
                 notifications: session.notifications,
             });
 
-            this.sessionLogger.logNotification(logContext, body.event || &#x27;&#x27;, {
+            this.sessionLogger.logNotification(logContext, body.event || &quot;&quot;, {
                 notificationId: body.notification_id,
                 notificationIndex: index,
             });
@@ -1161,17 +2532,367 @@ export class Oid4vciService implements OnModuleInit {
                     session.notifications[index],
                 );
             }
+            const state: SessionStatus &#x3D;
+                body.event &#x3D;&#x3D;&#x3D; &quot;credential_accepted&quot;
+                    ? SessionStatus.Completed
+                    : SessionStatus.Failed;
+            await this.sessionService.setState(session, state);
         } catch (error) {
             this.sessionLogger.logSessionError(
                 logContext,
                 error as Error,
-                &#x27;Failed to handle notification&#x27;,
+                &quot;Failed to handle notification&quot;,
                 {
                     notificationId: body.notification_id,
                 },
             );
             throw error;
         }
+    }
+
+    /**
+     * Handle deferred credential issuance.
+     * Creates a deferred transaction and returns HTTP 202 with transaction_id.
+     * @param parsedCredentialRequest The parsed credential request
+     * @param session The session
+     * @param tenantId The tenant ID
+     * @param claimsResult The claims webhook result indicating deferral
+     * @param logContext The logging context
+     * @returns A deferred credential response
+     */
+    private async handleDeferredIssuance(
+        parsedCredentialRequest: any,
+        session: any,
+        tenantId: string,
+        claimsResult: ClaimsWebhookResult,
+        logContext: SessionLogContext,
+    ): Promise&lt;{
+        transaction_id: string;
+        interval?: number;
+    }&gt; {
+        // For deferred issuance, we need to store the holder&#x27;s proof(s) for later verification
+        // We&#x27;ll verify the first proof and store the CNF for when the credential is ready
+        const issuer &#x3D; this.getIssuer(tenantId);
+
+        // Verify the first proof to get the holder&#x27;s public key
+        const jwt &#x3D; parsedCredentialRequest.proofs.jwt[0];
+        const payload &#x3D; decodeJwt(jwt);
+        const expectedNonce &#x3D; payload.nonce! as string;
+
+        // Delete the nonce to prevent reuse
+        const nonceResult &#x3D; await this.nonceRepository.delete({
+            nonce: expectedNonce,
+            tenantId,
+        });
+        if (nonceResult.affected &#x3D;&#x3D;&#x3D; 0) {
+            throw new CredentialRequestException(
+                &quot;invalid_nonce&quot;,
+                &quot;The nonce in the key proof is invalid or has already been used&quot;,
+            );
+        }
+
+        const verifiedProof &#x3D; await issuer.verifyCredentialRequestJwtProof({
+            expectedNonce,
+            issuerMetadata: await this.issuerMetadata(session.tenantId),
+            jwt,
+        });
+
+        const transactionId &#x3D; v4();
+        const interval &#x3D; claimsResult.interval ?? 5;
+
+        // Calculate expiration (default 24 hours)
+        const expiresAt &#x3D; new Date();
+        expiresAt.setHours(expiresAt.getHours() + 24);
+
+        // Create deferred transaction record
+        const deferredTransaction &#x3D; this.deferredTransactionRepository.create({
+            transactionId,
+            tenantId,
+            sessionId: session.id,
+            credentialConfigurationId:
+                parsedCredentialRequest.credentialConfigurationId as string,
+            holderCnf: verifiedProof.signer.publicJwk as Record&lt;
+                string,
+                unknown
+            &gt;,
+            status: DeferredTransactionStatus.Pending,
+            interval,
+            expiresAt,
+        });
+
+        await this.deferredTransactionRepository.save(deferredTransaction);
+
+        this.sessionLogger.logSession(
+            logContext,
+            &quot;Deferred credential issuance initiated&quot;,
+            {
+                transactionId,
+                credentialConfigurationId:
+                    parsedCredentialRequest.credentialConfigurationId,
+                interval,
+                expiresAt: expiresAt.toISOString(),
+            },
+        );
+
+        // Return response with HTTP 202 (handled by controller)
+        return {
+            transaction_id: transactionId,
+            interval,
+        };
+    }
+
+    /**
+     * Handle deferred credential request.
+     * Called when wallet polls with transaction_id.
+     * @param req The request
+     * @param body The deferred credential request DTO
+     * @param tenantId The tenant ID
+     * @returns Credential response or issuance_pending error
+     */
+    async getDeferredCredential(
+        req: Request,
+        body: DeferredCredentialRequestDto,
+        tenantId: string,
+    ): Promise&lt;CredentialResponse&gt; {
+        const issuer &#x3D; this.getIssuer(tenantId);
+        const resourceServer &#x3D; this.getResourceServer(tenantId);
+        const issuerMetadata &#x3D; await this.issuerMetadata(tenantId, issuer);
+        const issuanceConfig &#x3D;
+            await this.issuanceService.getIssuanceConfiguration(tenantId);
+        const headers &#x3D; getHeadersFromRequest(req);
+
+        const allowedAuthenticationSchemes &#x3D; [
+            SupportedAuthenticationScheme.DPoP,
+        ];
+
+        if (!issuanceConfig.dPopRequired) {
+            allowedAuthenticationSchemes.push(
+                SupportedAuthenticationScheme.Bearer,
+            );
+        }
+
+        // Verify the access token
+        await resourceServer.verifyResourceRequest({
+            authorizationServers: issuerMetadata.authorizationServers,
+            request: {
+                url: &#x60;${this.configService.getOrThrow&lt;string&gt;(&quot;PUBLIC_URL&quot;)}${req.url}&#x60;,
+                method: req.method as HttpMethod,
+                headers,
+            },
+            resourceServer: issuerMetadata.credentialIssuer.credential_issuer,
+            allowedAuthenticationSchemes,
+        });
+
+        // Find the deferred transaction
+        const deferredTransaction &#x3D;
+            await this.deferredTransactionRepository.findOneBy({
+                transactionId: body.transaction_id,
+                tenantId,
+            });
+
+        if (!deferredTransaction) {
+            throw new DeferredCredentialException(
+                &quot;invalid_transaction_id&quot;,
+                &quot;The transaction_id is invalid or has expired&quot;,
+            );
+        }
+
+        // Check if transaction has expired
+        if (new Date() &gt; deferredTransaction.expiresAt) {
+            await this.deferredTransactionRepository.update(
+                { transactionId: body.transaction_id },
+                { status: DeferredTransactionStatus.Expired },
+            );
+            throw new DeferredCredentialException(
+                &quot;invalid_transaction_id&quot;,
+                &quot;The transaction has expired&quot;,
+            );
+        }
+
+        // Create logging context
+        const logContext: SessionLogContext &#x3D; {
+            sessionId: deferredTransaction.sessionId,
+            tenantId,
+            flowType: &quot;OID4VCI&quot;,
+            stage: &quot;deferred_credential&quot;,
+        };
+
+        // Check the status of the deferred transaction
+        switch (deferredTransaction.status) {
+            case DeferredTransactionStatus.Pending:
+                // Credential is still being processed
+                this.sessionLogger.logSession(
+                    logContext,
+                    &quot;Deferred credential still pending&quot;,
+                    {
+                        transactionId: body.transaction_id,
+                        interval: deferredTransaction.interval,
+                    },
+                );
+                throw new DeferredCredentialException(
+                    &quot;issuance_pending&quot;,
+                    &quot;The credential issuance is still pending&quot;,
+                    deferredTransaction.interval,
+                );
+
+            case DeferredTransactionStatus.Failed:
+                throw new DeferredCredentialException(
+                    &quot;invalid_transaction_id&quot;,
+                    deferredTransaction.errorMessage ||
+                        &quot;The credential issuance has failed&quot;,
+                );
+
+            case DeferredTransactionStatus.Expired:
+                throw new DeferredCredentialException(
+                    &quot;invalid_transaction_id&quot;,
+                    &quot;The transaction has expired&quot;,
+                );
+
+            case DeferredTransactionStatus.Retrieved:
+                throw new DeferredCredentialException(
+                    &quot;invalid_transaction_id&quot;,
+                    &quot;The credential has already been retrieved&quot;,
+                );
+
+            case DeferredTransactionStatus.Ready:
+                // Credential is ready - return it
+                if (!deferredTransaction.credential) {
+                    throw new DeferredCredentialException(
+                        &quot;invalid_transaction_id&quot;,
+                        &quot;Credential is marked as ready but not available&quot;,
+                    );
+                }
+
+                // Mark as retrieved
+                await this.deferredTransactionRepository.update(
+                    { transactionId: body.transaction_id },
+                    { status: DeferredTransactionStatus.Retrieved },
+                );
+
+                this.sessionLogger.logSession(
+                    logContext,
+                    &quot;Deferred credential retrieved&quot;,
+                    {
+                        transactionId: body.transaction_id,
+                        credentialConfigurationId:
+                            deferredTransaction.credentialConfigurationId,
+                    },
+                );
+
+                // Return the credential response directly
+                // Per OID4VCI Section 9.2, the response has the same format as the Credential Response
+                return {
+                    credential: deferredTransaction.credential,
+                } as CredentialResponse;
+
+            default:
+                throw new DeferredCredentialException(
+                    &quot;invalid_transaction_id&quot;,
+                    &quot;Unknown transaction status&quot;,
+                );
+        }
+    }
+
+    /**
+     * Mark a deferred transaction as ready with the issued credential.
+     * This method is called when the external system completes processing.
+     * @param tenantId The tenant ID
+     * @param transactionId The transaction ID
+     * @param claims The claims to include in the credential
+     * @returns The updated deferred transaction
+     */
+    async completeDeferredTransaction(
+        tenantId: string,
+        transactionId: string,
+        claims: Record&lt;string, unknown&gt;,
+    ): Promise&lt;DeferredTransactionEntity | null&gt; {
+        // Find the deferred transaction
+        const transaction &#x3D; await this.deferredTransactionRepository.findOneBy({
+            transactionId,
+            tenantId,
+            status: DeferredTransactionStatus.Pending,
+        });
+
+        if (!transaction) {
+            return null;
+        }
+
+        // Get the session to issue the credential
+        const session &#x3D; await this.sessionService.get(transaction.sessionId);
+        if (!session) {
+            throw new ConflictException(
+                &#x60;Session ${transaction.sessionId} not found for deferred transaction ${transactionId}&#x60;,
+            );
+        }
+
+        // Issue the credential
+        const credential &#x3D; await this.credentialsService.getCredential(
+            transaction.credentialConfigurationId,
+            transaction.holderCnf as Jwk,
+            session,
+            claims as Record&lt;string, any&gt;,
+        );
+
+        // Update the transaction
+        await this.deferredTransactionRepository.update(
+            { transactionId, tenantId },
+            {
+                status: DeferredTransactionStatus.Ready,
+                credential,
+            },
+        );
+
+        transaction.status &#x3D; DeferredTransactionStatus.Ready;
+        transaction.credential &#x3D; credential;
+
+        return transaction;
+    }
+
+    /**
+     * Mark a deferred transaction as failed.
+     * @param tenantId The tenant ID
+     * @param transactionId The transaction ID
+     * @param errorMessage Optional error message
+     * @returns The updated deferred transaction
+     */
+    async failDeferredTransaction(
+        tenantId: string,
+        transactionId: string,
+        errorMessage?: string,
+    ): Promise&lt;DeferredTransactionEntity | null&gt; {
+        // Find the deferred transaction
+        const transaction &#x3D; await this.deferredTransactionRepository.findOneBy({
+            transactionId,
+            tenantId,
+        });
+
+        if (!transaction) {
+            return null;
+        }
+
+        await this.deferredTransactionRepository.update(
+            { transactionId, tenantId },
+            {
+                status: DeferredTransactionStatus.Failed,
+                errorMessage: errorMessage ?? &quot;Transaction marked as failed&quot;,
+            },
+        );
+
+        transaction.status &#x3D; DeferredTransactionStatus.Failed;
+        transaction.errorMessage &#x3D;
+            errorMessage ?? &quot;Transaction marked as failed&quot;;
+
+        return transaction;
+    }
+
+    /**
+     * Cleanup expired deferred transactions.
+     */
+    @Cron(CronExpression.EVERY_HOUR)
+    async cleanupExpiredDeferredTransactions() {
+        await this.deferredTransactionRepository.delete({
+            expiresAt: LessThan(new Date()),
+        });
     }
 }
 </code></pre>

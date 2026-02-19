@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>eudiplo documentation</title>
+        <title>@eudiplo/backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -62,10 +62,24 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">eudiplo documentation</a>
+                    <a href="../" class="navbar-brand">@eudiplo/backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -82,6 +96,10 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -116,7 +134,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/utils/logger/session-logger.service.ts</code>
+            <code>src/shared/utils/logger/session-logger.service.ts</code>
         </p>
 
 
@@ -212,12 +230,12 @@ Uses PinoLogger for structured logging.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(logger: PinoLogger, configService: ConfigService)</code>
+<code>constructor(logger: PinoLogger, loggerConfigService: <a href="../injectables/LoggerConfigService.html" target="_self">LoggerConfigService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/utils/logger/session-logger.service.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -256,10 +274,10 @@ Uses PinoLogger for structured logging.</p>
                                                         </td>
                                                 </tr>
                                                 <tr>
-                                                        <td>configService</td>
+                                                        <td>loggerConfigService</td>
                                                   
                                                         <td>
-                                                                    <code>ConfigService</code>
+                                                                        <code><a href="../injectables/LoggerConfigService.html" target="_self" >LoggerConfigService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -267,10 +285,6 @@ Uses PinoLogger for structured logging.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <ul>
-<li>ConfigService for accessing environment configuration.</li>
-</ul>
-
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -307,8 +321,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="146"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:146</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="143"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:143</a></div>
                         </td>
                     </tr>
 
@@ -388,8 +402,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="102"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:102</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -481,8 +495,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="124"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:124</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:121</a></div>
                         </td>
                     </tr>
 
@@ -574,8 +588,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="56"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:56</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:53</a></div>
                         </td>
                     </tr>
 
@@ -655,8 +669,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="75"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:75</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -748,8 +762,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:37</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="34"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:34</a></div>
                         </td>
                     </tr>
 
@@ -829,8 +843,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="180"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:180</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="177"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:177</a></div>
                         </td>
                     </tr>
 
@@ -922,8 +936,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="202"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:202</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="199"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:199</a></div>
                         </td>
                     </tr>
 
@@ -1015,8 +1029,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="221"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:221</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="218"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:218</a></div>
                         </td>
                     </tr>
 
@@ -1120,8 +1134,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="163"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:163</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:160</a></div>
                         </td>
                     </tr>
 
@@ -1203,8 +1217,8 @@ Uses PinoLogger for structured logging.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="30"
-                                    class="link-to-prism">src/utils/logger/session-logger.service.ts:30</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:27</a></div>
                         </td>
                     </tr>
 
@@ -1247,7 +1261,7 @@ Uses PinoLogger for structured logging.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/utils/logger/session-logger.service.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/shared/utils/logger/session-logger.service.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -1260,10 +1274,10 @@ Uses PinoLogger for structured logging.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { PinoLogger } from &#x27;nestjs-pino&#x27;;
-import { ConfigService } from &#x27;@nestjs/config&#x27;;
-import { SessionLogContext } from &#x27;./session-logger-context&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@nestjs/common&quot;;
+import { PinoLogger } from &quot;nestjs-pino&quot;;
+import { LoggerConfigService } from &quot;./logger-config.service&quot;;
+import { SessionLogContext } from &quot;./session-logger-context&quot;;
 
 /**
  * Service for logging session-related events and errors.
@@ -1280,13 +1294,10 @@ export class SessionLoggerService {
      */
     constructor(
         private readonly logger: PinoLogger,
-        private readonly configService: ConfigService,
+        private readonly loggerConfigService: LoggerConfigService,
     ) {
-        this.logger.setContext(&#x27;SessionLoggerService&#x27;);
-        this.isEnabled &#x3D; this.configService.get&lt;boolean&gt;(
-            &#x27;LOG_ENABLE_SESSION_LOGGER&#x27;,
-            false,
-        );
+        this.logger.setContext(&quot;SessionLoggerService&quot;);
+        this.isEnabled &#x3D; this.loggerConfigService.isSessionLoggerEnabled();
     }
 
     private shouldLog(): boolean {
@@ -1304,8 +1315,8 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;flow_start&#x27;,
-                stage: &#x27;initialization&#x27;,
+                event: &quot;flow_start&quot;,
+                stage: &quot;initialization&quot;,
                 ...additionalData,
             },
             message,
@@ -1323,8 +1334,8 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;flow_complete&#x27;,
-                stage: &#x27;completion&#x27;,
+                event: &quot;flow_complete&quot;,
+                stage: &quot;completion&quot;,
                 ...additionalData,
             },
             message,
@@ -1346,7 +1357,7 @@ export class SessionLoggerService {
         this.logger.error(
             {
                 ...context,
-                event: &#x27;flow_error&#x27;,
+                event: &quot;flow_error&quot;,
                 error: {
                     name: error.name,
                     message: error.message,
@@ -1371,8 +1382,8 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;credential_issuance&#x27;,
-                stage: &#x27;credential_creation&#x27;,
+                event: &quot;credential_issuance&quot;,
+                stage: &quot;credential_creation&quot;,
                 credentialType,
                 ...additionalData,
             },
@@ -1393,12 +1404,12 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;credential_verification&#x27;,
-                stage: &#x27;verification&#x27;,
+                event: &quot;credential_verification&quot;,
+                stage: &quot;verification&quot;,
                 verificationResult,
                 ...additionalData,
             },
-            &#x60;[${context.flowType}] Credential verification ${verificationResult ? &#x27;succeeded&#x27; : &#x27;failed&#x27;} for session ${context.sessionId}&#x60;,
+            &#x60;[${context.flowType}] Credential verification ${verificationResult ? &quot;succeeded&quot; : &quot;failed&quot;} for session ${context.sessionId}&#x60;,
         );
     }
 
@@ -1411,8 +1422,8 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;authorization_request&#x27;,
-                stage: &#x27;authorization&#x27;,
+                event: &quot;authorization_request&quot;,
+                stage: &quot;authorization&quot;,
                 ...additionalData,
             },
             &#x60;[${context.flowType}] Authorization request created for session ${context.sessionId}&#x60;,
@@ -1428,8 +1439,8 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;token_exchange&#x27;,
-                stage: &#x27;token_exchange&#x27;,
+                event: &quot;token_exchange&quot;,
+                stage: &quot;token_exchange&quot;,
                 ...additionalData,
             },
             &#x60;[${context.flowType}] Token exchange for session ${context.sessionId}&#x60;,
@@ -1449,8 +1460,8 @@ export class SessionLoggerService {
         this.logger.info(
             {
                 ...context,
-                event: &#x27;notification&#x27;,
-                stage: &#x27;notification&#x27;,
+                event: &quot;notification&quot;,
+                stage: &quot;notification&quot;,
                 notificationEvent,
                 ...additionalData,
             },
